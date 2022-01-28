@@ -2,8 +2,7 @@ const app = Vue.createApp({
   data() {
     return {
       mainIngredient: "",
-      json: null,
-      recipes: null,
+      recipes: "",
     };
   },
   methods: {
@@ -18,22 +17,16 @@ const app = Vue.createApp({
         }
       ).then((response) => {
         if (response.ok) {
-          json = JSON.parse(response.json);
-          let recipes = {
-            name: json.hits[0].label,
-          };
-          return recipes;
-          // this.$emit("recipes-found", recipe);
-          // console.log(response.json);
+          this.recipes = response.json();
         } else {
           alert(
             "Server returned " + response.status + " : " + response.statusText
           );
         }
       });
+
       e.preventDefault();
-      this.mainIngredient = "";
-      this.recipes = null;
+      return this.recipes;
     },
   },
 });
