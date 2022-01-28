@@ -43,17 +43,20 @@
             </div>
 
             <div v-if="recipes" id="recipe-list" class="container">
-                <h2>Recipes</h2>
-                <p> {{ recipes.length }} </p>
-                <ul>
-                   <li v-for="recipe in recipes">
-                    
-                        
-                        {{ recipe.source }}
-                        
-                    </li>
-                    
-                </ul>
+                <h2>Recipes</h2> 
+                <div v-for="recipe in recipes"> 
+                <div class="card" style="width: 18rem;">
+                    <img v-bind:src="recipe.recipe.image" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ recipe.recipe.label }}</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      
+                      <a v-bind:href="recipe.recipe.url" class="btn btn-primary">Go to recipe</a>
+                      
+                    </div>
+                  </div>
+                </div>  
+              
             </div>
         </div>
 

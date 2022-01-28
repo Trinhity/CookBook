@@ -2,7 +2,7 @@ const app = Vue.createApp({
   data() {
     return {
       mainIngredient: "",
-      recipes: "",
+      recipes: null,
     };
   },
   methods: {
@@ -15,18 +15,24 @@ const app = Vue.createApp({
           method: "GET",
           headers: {},
         }
-      ).then((response) => {
-        if (response.ok) {
-          this.recipes = response.json();
-        } else {
-          alert(
-            "Server returned " + response.status + " : " + response.statusText
-          );
-        }
-      });
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          // if (response.ok) {
+          this.recipes = response.hits;
+          console.log(this.recipes);
+          return {
+            recipes: this.recipes,
+          };
+
+          // } else {
+          //   alert(
+          //     "Server returned " + response.status + " : " + response.statusText
+          //   );
+          // }
+        });
 
       e.preventDefault();
-      return this.recipes;
     },
   },
 });

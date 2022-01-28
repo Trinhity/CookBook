@@ -21,3 +21,6 @@ span.deleteicon input {
   padding-right: 18px;
   box-sizing: border-box;
 }
+.recipefont {
+  font-style: italic;
+}
