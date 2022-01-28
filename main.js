@@ -3,6 +3,7 @@ const app = Vue.createApp({
     return {
       mainIngredient: "",
       recipes: null,
+      errors: null,
     };
   },
   methods: {
@@ -19,10 +20,15 @@ const app = Vue.createApp({
         .then((response) => response.json())
         .then((response) => {
           // if (response.ok) {
-          this.recipes = response.hits;
-          console.log(this.recipes);
+          if (response.hits.length > 0) {
+            this.recipes = response.hits;
+          } else {
+            this.errors = "Does that ingredient exist?";
+          }
+
           return {
             recipes: this.recipes,
+            errors: this.errors,
           };
 
           // } else {
@@ -33,6 +39,8 @@ const app = Vue.createApp({
         });
 
       e.preventDefault();
+      this.recipes = null;
+      this.errors = null;
     },
   },
 });

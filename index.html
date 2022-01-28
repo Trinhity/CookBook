@@ -23,12 +23,7 @@
         <div id="app">
             <div id="find-recipes-form" class="container">
                 <form v-on:submit="searchRecipe">
-                    <!-- <p v-if="errors.length > 0">
-                        <b>Error(s): </b>
-                        <ul>
-                            <li v-for="error in errors">{{ error }}</li>
-                        </ul>
-                    </p> -->
+                    
                     <div class="input-group mb-3" >
                         <span class="deleteicon">                       
                             <input id="mainIngredient" type="search" class="form-control" placeholder="What are you craving?" aria-describedby="button-addon2" v-model="mainIngredient">              
@@ -42,22 +37,47 @@
                 </form>
             </div>
 
-            <div v-if="recipes" id="recipe-list" class="container">
+            <!-- <div v-if="recipes" id="recipe-list" class="container">
                 <h2>Recipes</h2> 
-                <div v-for="recipe in recipes"> 
-                <div class="card" style="width: 18rem;">
-                    <img v-bind:src="recipe.recipe.image" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title">{{ recipe.recipe.label }}</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      
-                      <a v-bind:href="recipe.recipe.url" class="btn btn-primary">Go to recipe</a>
-                      
-                    </div>
-                  </div>
-                </div>  
-              
+                <div class="row">
+                    <div v-for="recipe in recipes" class="col-sm-6"> 
+                        <div class="card" style="width: 18rem;">
+                            <img v-bind:src="recipe.recipe.image" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ recipe.recipe.label }}</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                
+                               
+                            
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div> -->
+            <div v-if="errors!=null">
+                <p>Error(s): {{ errors }}</p>
+                
             </div>
+            <div v-if="recipes!=null" id="recipe-list" class="container">
+                <h2>Recipes</h2> 
+                <div v-for="recipe in recipes">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                        <div class="col-md-4">
+                            <img v-bind:src="recipe.recipe.image" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                            <h5 class="card-title">{{ recipe.recipe.label }}</h5>
+                            <p class="card-text">{{ recipe.recipe.cuisineType[0].toUpperCase() }} - {{ recipe.recipe.mealType[0].toUpperCase() }} - {{ recipe.recipe.dishType[0].toUpperCase() }}</p>
+                            <a v-bind:href="recipe.recipe.url" class="btn btn-primary">Go to recipe</a>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
 
         <!-- Import app-->
