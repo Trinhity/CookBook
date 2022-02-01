@@ -36,48 +36,36 @@
                     </div>
                 </form>
             </div>
-
-            <!-- <div v-if="recipes" id="recipe-list" class="container">
-                <h2>Recipes</h2> 
-                <div class="row">
-                    <div v-for="recipe in recipes" class="col-sm-6"> 
-                        <div class="card" style="width: 18rem;">
-                            <img v-bind:src="recipe.recipe.image" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ recipe.recipe.label }}</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                
-                               
-                            
-                            </div>
-                        </div>
-                    </div>  
+            <div class="container">
+                <div v-if="errors!=null">
+                    <p>Error(s): {{ errors }}</p>
+                    
                 </div>
-            </div> -->
-            <div v-if="errors!=null">
-                <p>Error(s): {{ errors }}</p>
-                
             </div>
             <div v-if="recipes!=null" id="recipe-list" class="container">
                 <h2>Recipes</h2> 
                 <div v-for="recipe in recipes">
                     <div class="card mb-3">
                         <div class="row g-0">
-                        <div class="col-md-4">
-                            <img v-bind:src="recipe.recipe.image" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                            <h5 class="card-title">{{ recipe.recipe.label }}</h5>
-                            <p class="card-text">{{ recipe.recipe.cuisineType[0].toUpperCase() }} - {{ recipe.recipe.mealType[0].toUpperCase() }} - {{ recipe.recipe.dishType[0].toUpperCase() }}</p>
-                            <a v-bind:href="recipe.recipe.url" class="btn btn-primary">Go to recipe</a>
+                            <div class="col-md-4">
+                                <img v-bind:src="recipe.recipe.image" class="img-fluid rounded-start" alt="...">
                             </div>
-                        </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ recipe.recipe.label }}</h5>
+                                    <p class="card-subtitle mb-2 text-muted">{{ recipe.recipe.cuisineType[0].toUpperCase() }} - {{ recipe.recipe.mealType[0].toUpperCase() }} - {{ recipe.recipe.dishType[0].toUpperCase() }}</p>
+                                    <div >
+                                        <ul style="height:10%" class="list-group list-group-flush overflow-auto">
+                                            <li v-for="ingredient in recipe.recipe.ingredientLines" class="list-group-item">{{ ingredient }}</li>                               
+                                        </ul>
+                                    </div>
+                                    <a v-bind:href="recipe.recipe.url" class="btn btn-primary">Go to recipe</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
+            </div>           
         </div>
 
         <!-- Import app-->
