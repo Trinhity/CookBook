@@ -3,6 +3,7 @@ const app = Vue.createApp({
     return {
       mainIngredient: "",
       diet: "",
+      health: "",
       cuisineType: "",
       mealType: "",
       dishType: "",
@@ -17,19 +18,23 @@ const app = Vue.createApp({
         encodeURI(this.mainIngredient) +
         "&app_id=26d89fcd&app_key=28d64d9439085ffc46d2b5ac16b31fc4";
 
-      if (this.diet) {
-        string += "&diet=" + encoreURI(this.diet);
+      if (this.diet != "") {
+        string += "&diet=" + encodeURI(this.diet);
       }
 
-      if (this.cuisineType) {
+      if (this.health != "") {
+        string += "&health=" + encodeURI(this.health);
+      }
+
+      if (this.cuisineType != "") {
         string += "&cuisineType=" + encodeURI(this.cuisineType);
       }
 
-      if (this.mealType) {
+      if (this.mealType != "") {
         string += "&mealType=" + encodeURI(this.mealType);
       }
 
-      if (this.dishType) {
+      if (this.dishType != "") {
         string += "&dishType=" + encodeURI(this.dishType);
       }
 
@@ -38,27 +43,26 @@ const app = Vue.createApp({
       fetch(string, {
         method: "GET",
         headers: {},
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          // if (response.ok) {
-          if (response.hits.length > 0) {
-            this.recipes = response.hits;
-          } else {
-            this.errors = "Does that ingredient exist?";
-          }
+      }).then((response) => {
+        if (response.ok) {
+          response.then((response) => {
+            if (response.hits.length > 0) {
+              this.recipes = response.hits;
+            } else {
+              this.errors = "Maybe you should invent this dish";
+            }
 
-          return {
-            recipes: this.recipes,
-            errors: this.errors,
-          };
-
-          // } else {
-          //   alert(
-          //     "Server returned " + response.status + " : " + response.statusText
-          //   );
-          // }
-        });
+            return {
+              recipes: this.recipes,
+              errors: this.errors,
+            };
+          });
+        } else {
+          alert(
+            "Server returned " + response.status + " : " + response.statusText
+          );
+        }
+      });
 
       e.preventDefault();
       this.recipes = null;
