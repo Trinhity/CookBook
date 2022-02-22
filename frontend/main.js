@@ -45,18 +45,16 @@ const app = Vue.createApp({
         headers: {},
       }).then((response) => {
         if (response.ok) {
-          response.then((response) => {
-            if (response.hits.length > 0) {
-              this.recipes = response.hits;
-            } else {
-              this.errors = "Maybe you should invent this dish";
-            }
+          if (response.hits.length > 0) {
+            this.recipes = response.hits;
+          } else {
+            this.errors = "Maybe you should invent this dish";
+          }
 
-            return {
-              recipes: this.recipes,
-              errors: this.errors,
-            };
-          });
+          return {
+            recipes: this.recipes,
+            errors: this.errors,
+          };
         } else {
           alert(
             "Server returned " + response.status + " : " + response.statusText
