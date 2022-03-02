@@ -23,5 +23,8 @@ mongoose
   .then(() => console.log("Connected to the database"))
   .catch((err) => console.log(err));
 
+// Routes
+app.use("/api/recipes", require("./routes/routes"));
+
 // Start server
 app.listen(port, () => console.log(`Server is running on ${port}`));
