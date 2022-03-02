@@ -17,9 +17,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "server": "node backend/server.js --ignore 'client/",
-    "client": "npm run server --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "start": "node app.js",
+    "dev": "nodemon ./server/app.js"
   },
   "repository": {
     "type": "git",
