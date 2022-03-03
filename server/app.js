@@ -7,7 +7,7 @@ const cors = require("cors");
 const app = express();
 const port = 5000; // 5000
 const DB_URI =
-  "mongodb+srv://a3gisce:fP40ojy3QJErDn8c@cluster0.4a8cr.mongodb.net/CookBook?retryWrites=true&w=majority";
+  "mongodb+srv://a3gisce:HOl78RJZIi3k4Im8@cluster0.4a8cr.mongodb.net/CookBook?retryWrites=true&w=majority";
 
 // Middlewares
 app.use(cors());

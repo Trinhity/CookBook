@@ -3,6 +3,8 @@ const CookBook = require("../models/recipes");
 module.exports = class API {
   static async saveRecipe(req, res) {
     const recipe = req.body;
+    const imagename = req.file.filename;
+    recipe.image = imagename;
     try {
       await CookBook.create(recipe);
       res.status(200).json({
@@ -27,7 +29,15 @@ module.exports = class API {
   }
 
   static async getSavedRecipesByID(req, res) {
-    res.send("TEST GET SAVED BY ID");
+    const id = req.params.id;
+    try {
+      const recipe = await CookBook.findById(id);
+      res.status(200).json(recipe);
+    } catch (err) {
+      res.status(404).json({
+        Error: err.message,
+      });
+    }
   }
 
   static async deleteSavedRecipes(req, res) {
