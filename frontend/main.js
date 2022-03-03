@@ -43,24 +43,23 @@ const app = Vue.createApp({
       fetch(string, {
         method: "GET",
         headers: {},
-      }).then((response) => {
-        if (response.ok) {
+      })
+        .then((response) => response.json())
+        .then((response) => {
           if (response.hits.length > 0) {
             this.recipes = response.hits;
           } else {
             this.errors = "Maybe you should invent this dish";
+            alert(
+              "Server returned " + response.status + " : " + response.statusText
+            );
           }
 
           return {
             recipes: this.recipes,
             errors: this.errors,
           };
-        } else {
-          alert(
-            "Server returned " + response.status + " : " + response.statusText
-          );
-        }
-      });
+        });
 
       e.preventDefault();
       this.recipes = null;
