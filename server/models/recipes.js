@@ -22,15 +22,9 @@ const recipeSchema = mongoose.Schema({
     },
   ],
   calories: 0,
-  glycemicIndex: 0,
-  totalCO2Emissions: 0,
-  co2EmissionsClass: "string",
-  totalWeight: 0,
   cuisineType: ["string"],
   mealType: ["string"],
   dishType: ["string"],
-  totalNutrients: {},
-  totalDaily: {},
 });
 
-module.exports = mongoose.model("Cookbook", recipeSchema);
+module.exports = mongoose.model("recipes", recipeSchema);
