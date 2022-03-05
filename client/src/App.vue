@@ -57,6 +57,6 @@
         { text: 'Bookmarked', icon: 'mdi-bookmark', link: "/bookmarked"},
         { text: 'About', icon: 'mdi-help-box', link: "/about" },
       ],
-       }),
+    }),
   }
 </script>

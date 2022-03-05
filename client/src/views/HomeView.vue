@@ -33,12 +33,7 @@
   export default {
     name: 'Home',
     data() {
-      return {
-        recipes: [],
-        item: [
-          { text: 'Home', icon: 'mdi-magnify', link: "/" },
-        ],
-      }
+      return {}
     },
 
     components: {

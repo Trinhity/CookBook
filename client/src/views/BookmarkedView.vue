@@ -1,7 +1,7 @@
 <template> 
     <v-main>
       <v-container>
-          <h1>Bookmarked</h1>
+        <h1>Bookmarked</h1>
         <v-row>
           <v-col
             v-for="n in 24"
@@ -16,13 +16,6 @@
 </template>
 
 <script>
-  export default {
-    //
-  }
-</script>
-
-
-<script>
   import API from "../api"
 
   export default {
@@ -34,7 +27,7 @@
     },
 
     async created() {
-      this.recipes = await API.getAllRecipes();
+      // this.recipes = await API.getAllRecipes();
     },
 
     components: {
