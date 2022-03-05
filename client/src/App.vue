@@ -6,8 +6,10 @@
     >
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title>NAV</v-list-item-title>
-        <v-list-item-subtitle>SUB</v-list-item-subtitle>
+        <v-icon
+        x-large
+        >mdi-account</v-icon>
+        <v-list-item-subtitle>account name here</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
      
