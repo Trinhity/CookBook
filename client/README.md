@@ -1,4 +1,4 @@
-# cookbook
+# client
 
 ## Project setup
 ```
