@@ -3,7 +3,7 @@ const url = "/api/recipes";
 
 export default class API {
   // Get all recipes from the database
-  static async getAllRecipes() {
+  static async getSavedRecipes() {
     const res = await axios.get(url);
     return res.data;
   }
