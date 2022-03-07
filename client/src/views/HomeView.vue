@@ -13,8 +13,10 @@
             outlined
             rounded
             clearable
+            required
             append-outer-icon="mdi-magnify"
             @click:append-outer="searchRecipe"
+            :rules="ingredientRules"
           ></v-text-field>
           
         </v-col>
@@ -29,8 +31,12 @@
   export default {
     name: 'Home',
     data: () => ({
-      mainIngredient: ""
-      
+      mainIngredient: '',
+
+
+      ingredientRules: [
+        v => !!v || 'Ingredient is required',
+      ]
     }),
 
     components: {
@@ -39,30 +45,31 @@
 
     methods: {
       searchRecipe(e) {
-        string =
+        console.log(this.mainIngredient);
+        var string =
           "https://api.edamam.com/api/recipes/v2?type=public&q=" +
           encodeURI(this.mainIngredient) +
           "&app_id=26d89fcd&app_key=28d64d9439085ffc46d2b5ac16b31fc4";
 
-        if (this.diet != "") {
-          string += "&diet=" + encodeURI(this.diet);
-        }
+        // if (this.diet != "") {
+        //   string += "&diet=" + encodeURI(this.diet);
+        // }
 
-        if (this.health != "") {
-          string += "&health=" + encodeURI(this.health);
-        }
+        // if (this.health != "") {
+        //   string += "&health=" + encodeURI(this.health);
+        // }
 
-        if (this.cuisineType != "") {
-          string += "&cuisineType=" + encodeURI(this.cuisineType);
-        }
+        // if (this.cuisineType != "") {
+        //   string += "&cuisineType=" + encodeURI(this.cuisineType);
+        // }
 
-        if (this.mealType != "") {
-          string += "&mealType=" + encodeURI(this.mealType);
-        }
+        // if (this.mealType != "") {
+        //   string += "&mealType=" + encodeURI(this.mealType);
+        // }
 
-        if (this.dishType != "") {
-          string += "&dishType=" + encodeURI(this.dishType);
-        }
+        // if (this.dishType != "") {
+        //   string += "&dishType=" + encodeURI(this.dishType);
+        // }
 
         string += "&random=true";
 
@@ -88,8 +95,8 @@
           });
 
         e.preventDefault();
-        // this.recipes = null;
-        // this.errors = null;
+        this.recipes = null;
+        this.errors = null;
       },
     },
   }

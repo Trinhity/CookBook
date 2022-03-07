@@ -2,7 +2,7 @@
     <v-main>
       <v-container>
         <h1>Bookmarked</h1>
-        <v-row>
+         <v-row>
           <v-col
             v-for="n in 24"
             :key="n"
@@ -27,7 +27,7 @@
     },
 
     async created() {
-      // this.recipes = await API.getAllRecipes();
+      this.recipes = await API.getAllRecipes();
     },
 
     components: {

@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "/api/post";
+const url = "/api/recipes";
 
 export default class API {
   // Get all recipes from the database

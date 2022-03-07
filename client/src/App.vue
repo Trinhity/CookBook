@@ -4,16 +4,18 @@
       v-model="drawer"
       app
     >
-    <v-list-item>
-      <v-list-item-content>
-        <v-icon
-        x-large
-        >mdi-account</v-icon>
-        <v-list-item-subtitle>account name here</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
+    <v-list>
+      <v-list-item>
+        <v-list-item-content>
+          <v-icon
+          x-large
+          >mdi-account</v-icon>
+          <v-list-item-subtitle>account name here</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
      
-     <v-divider></v-divider>
+    <v-divider></v-divider>
 
     <v-list dense>
       <v-list-item-group       
