@@ -1,29 +1,84 @@
 <template>    
       <v-container>
         <h1>Bookmarked</h1>
-         <v-row>
+        
+         <v-row no-gutters>
           <v-col
+            sm="4"
+            class="pa-3"
             v-for="recipe in recipes"
-            :key="recipe"
+            :key="recipe._id"
             cols="4"
           >
-            <v-card class="pa-2">
-              <v-card-actions class="pb-0">
-                <v-row class="mt-1 mx-1">
-                  <v-col sm="2">
-                    some image here
-                  </v-col >
-                  <v-col sm="10" class="d-flex justify-end">
-                    <v-btn color="red" text>Delete</v-btn>
-                  </v-col>
-                </v-row>
-              </v-card-actions>
-              <v-card-subtitle class="headline">
-                <h3>{{ recipe.label }}</h3>
-              </v-card-subtitle>
-              <v-card-text class="grey--text">
-                <p>{{ recipe.url }}</p>
-              </v-card-text>
+          
+            <v-card class="pa-1">
+              <v-img height="250" :src="`${recipe.recipe.image}`"></v-img>
+
+             
+              
+             
+              <v-card-title class="headline">
+                {{ recipe.recipe.label }}
+              </v-card-title>
+
+               <v-tooltip right>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      color="primary"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      Ingredients
+                    </v-btn>
+                  </template>
+                  <v-list>
+
+                  
+                    <v-list-item-content>
+                      <v-list-item-title>Ingredients</v-list-item-title>
+                    </v-list-item-content>
+                    
+                    <v-list-item
+                      v-for="ingredient in recipe.recipe.ingredientLines"
+                      :key="ingredient"
+                    >
+                      <v-list-item-content>
+                        <v-list-item-title v-text="ingredient"></v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+
+                  </v-list>
+                </v-tooltip>
+
+              <v-tooltip right>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    Health Labels
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item-content>
+                    <v-list-item-title>Health Labels</v-list-item-title>
+                  </v-list-item-content>
+                  
+                  <v-list-item
+                    v-for="healthLabel in recipe.recipe.healthLabels"
+                    :key="healthLabel" 
+                  >
+                    <v-btn small outlined color="indigo">
+                      {{ healthLabel }}
+                    </v-btn>
+                  </v-list-item>
+
+                </v-list>
+              </v-tooltip>
+
             </v-card>
           </v-col>
         </v-row>
@@ -34,15 +89,18 @@
   import API from "../api"
 
   export default {
-    name: 'Bookmarked',
+    name: 'bookmarked',
     data() {
+      
       return {
         recipes: [],
+        
       }
     },
 
     async created() {
       this.recipes = await API.getSavedRecipes(); 
+
     },
 
     components: {
