@@ -1,88 +1,73 @@
 <template>    
-      <v-container>
-        <h1>Bookmarked</h1>
+  <v-container>
+    <h1>Bookmarked</h1>
+    
         
-         <v-row no-gutters>
-          <v-col
-            sm="4"
-            class="pa-3"
-            v-for="recipe in recipes"
-            :key="recipe._id"
-            cols="4"
-          >
-          
-            <v-card class="pa-1">
-              <v-img height="250" :src="`${recipe.recipe.image}`"></v-img>
-
-             
-              
-             
-              <v-card-title class="headline">
-                {{ recipe.recipe.label }}
-              </v-card-title>
-
-               <v-tooltip right>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      color="primary"
-                      dark
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      Ingredients
-                    </v-btn>
-                  </template>
-                  <v-list>
-
-                  
-                    <v-list-item-content>
-                      <v-list-item-title>Ingredients</v-list-item-title>
-                    </v-list-item-content>
-                    
-                    <v-list-item
-                      v-for="ingredient in recipe.recipe.ingredientLines"
-                      :key="ingredient"
-                    >
-                      <v-list-item-content>
-                        <v-list-item-title v-text="ingredient"></v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-
-                  </v-list>
-                </v-tooltip>
-
-              <v-tooltip right>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    color="primary"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
+    <v-row no-gutters>
+      <v-col
+        sm="4"
+        class="pa-3"
+        v-for="recipe in recipes"
+        :key="recipe._id"
+        cols="4"
+      >     
+                
+          <v-card>
+            <v-hover v-slot="{ hover }">  
+              <v-img height="250" :src="`${recipe.recipe.image}`">
+                <v-fade-transition>
+                  <v-overlay
+                    v-if="hover"
+                    absolute
+                    color="grey"
                   >
-                    Health Labels
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item-content>
-                    <v-list-item-title>Health Labels</v-list-item-title>
-                  </v-list-item-content>
-                  
-                  <v-list-item
-                    v-for="healthLabel in recipe.recipe.healthLabels"
-                    :key="healthLabel" 
-                  >
-                    <v-btn small outlined color="indigo">
-                      {{ healthLabel }}
-                    </v-btn>
-                  </v-list-item>
+                    <v-btn>See recipe details</v-btn>
+                  </v-overlay>
+                </v-fade-transition>
+              </v-img>
+            </v-hover> 
 
-                </v-list>
-              </v-tooltip>
+            <v-card-title class="indigo white--text">
+              {{ recipe.recipe.label }}
+            </v-card-title>
 
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>   
+            <v-divider></v-divider>
+
+            <v-row no-gutters class="pa-4" >
+              <v-col>
+                <v-btn small outlined color="indigo">
+                  {{ recipe.recipe.dishType[0] }}
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn small outlined color="indigo">
+                  {{ recipe.recipe.mealType[0] }}
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn small outlined color="indigo">
+                  {{ recipe.recipe.cuisineType[0] }}
+                </v-btn>
+              </v-col>
+            </v-row>
+
+            <v-divider></v-divider>
+            
+            <v-expansion-panels flat>
+              <v-expansion-panel>
+                <v-expansion-panel-header ripple>Ingredients</v-expansion-panel-header>
+                <v-expansion-panel-content
+                  v-for="ingredient in recipe.recipe.ingredientLines"
+                  :key="ingredient"
+                >
+                  {{ ingredient }}
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-card>    
+      </v-col>
+    </v-row> 
+  </v-container>   
 </template>
 
 <script>
@@ -94,6 +79,7 @@
       
       return {
         recipes: [],
+        overlay: false,
         
       }
     },
