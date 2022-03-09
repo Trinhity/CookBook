@@ -82,7 +82,6 @@
             <router-view></router-view>
         
       </v-main>
-    
   </v-app>
   
 </template>
@@ -99,3 +98,11 @@
     }),
   }
 </script>
+
+<style>
+#inspire {
+  background: url('http://textures.world/wp-content/uploads/2018/10/Seamless-White-Wood-Texture-9-copy.jpg')
+    center center fixed !important;
+  background-size: cover;
+}
+</style>
