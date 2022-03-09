@@ -101,8 +101,6 @@
 
 <style>
 #inspire {
-  background: url('http://textures.world/wp-content/uploads/2018/10/Seamless-White-Wood-Texture-9-copy.jpg')
-    center center fixed !important;
-  background-size: cover;
+  background-color: #EDE0D4;
 }
 </style>
