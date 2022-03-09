@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <h1>Home page</h1>
-    <v-form>  
+    <v-form
+      @submit="searchRecipe"
+    >  
       <v-row>
         <v-col cols="12" sm="6" md="3">
           
@@ -14,8 +16,8 @@
             rounded
             clearable
             required
-            append-outer-icon="mdi-magnify"
-            @click:append-outer="searchRecipe"
+            append-icon="mdi-magnify"
+            @click:append="searchRecipe"
             :rules="ingredientRules"
           ></v-text-field>
           
@@ -52,7 +54,7 @@
           </v-hover> 
 
           <v-card-title  
-            class="brown white--text"
+            class="brown white--text grow"
             v-if="recipe.recipe.label.length > 100"
           >
             {{ recipe.recipe.label.substring(0, 100)+"..." }}
@@ -65,7 +67,7 @@
               <v-icon>mdi-heart</v-icon>
             </v-btn> 
           </v-card-title>
-          <v-card-title class="brown white--text"
+          <v-card-title class="brown white--text grow"
             v-else
           >
             {{ recipe.recipe.label }}
@@ -81,15 +83,15 @@
    
           <v-divider></v-divider>
 
-          <v-row no-gutters class="pa-4" >
-            <v-col>
+          <v-row no-gutters class="pa-3" >
+            <v-col class="mx-2">
               <v-btn small outlined color="#9C6644">
-                {{ recipe.recipe.dishType[0] }}
+                {{ recipe.recipe.mealType[0] }}
               </v-btn>
             </v-col>
             <v-col>
               <v-btn small outlined color="#9C6644">
-                {{ recipe.recipe.mealType[0] }}
+                {{ recipe.recipe.dishType[0] }}
               </v-btn>
             </v-col>
             <v-col>
@@ -152,6 +154,8 @@
 
     methods: {
       searchRecipe(e) {
+        e.preventDefault();
+        
         console.log(this.mainIngredient);
         var string =
           "https://api.edamam.com/api/recipes/v2?type=public&q=" +
@@ -201,7 +205,6 @@
             };
           });
 
-        e.preventDefault();
         this.recipes = null;
         this.errors = null;
       },
