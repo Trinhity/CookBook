@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const recipeSchema = mongoose.Schema({
+  recipeid: "string",
   uri: "string",
   label: "string",
   image: "string",
