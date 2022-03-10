@@ -30,7 +30,7 @@
       v-if="(recipes != null) && (recipes.length > 0)"
     >
       <v-col
-        sm="3"
+        sm="4"
         class="pa-3 d-flex flex-row"
         v-for="recipe in recipes"
         :key="recipe._id"
@@ -38,6 +38,7 @@
       >                    
         <v-card
           class="d-flex flex-column"
+          width="100%"
         >
           <v-hover v-slot="{ hover }">  
             <v-img 
@@ -76,9 +77,16 @@
    
           <v-divider></v-divider>
 
-          <v-row no-gutters class="pa-3" >
-            <v-col class="mx-2">
+          <v-row 
+            no-gutters 
+          >
+            <v-col 
+              class="d-flex flex-row pa-3"
+              sm="6"
+              cols="4"
+            >
               <v-btn 
+                class="d-flex flex-column"
                 small 
                 outlined 
                 color="#9C6644"
@@ -86,9 +94,9 @@
               >
                 {{ recipe.recipe.mealType[0] }}
               </v-btn>
-            </v-col>
-            <v-col>
+            
               <v-btn 
+                class="d-flex flex-column"
                 small 
                 outlined 
                 color="#9C6644"
@@ -96,9 +104,9 @@
               >
                 {{ recipe.recipe.dishType[0] }}
               </v-btn>
-            </v-col>
-            <v-col>
+            
               <v-btn 
+                class="d-flex flex-column"
                 small 
                 outlined 
                 color="#9C6644"
