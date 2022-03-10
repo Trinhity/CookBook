@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import BookmarkedView from "../views/BookmarkedView.vue";
+import SearchRecipeView from "../views/SearchRecipeView.vue";
 
 Vue.use(VueRouter);
 
@@ -10,6 +11,11 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/searchrecipes",
+    name: "search",
+    component: SearchRecipeView,
   },
   {
     path: "/bookmarked",

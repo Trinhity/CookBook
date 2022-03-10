@@ -77,13 +77,10 @@
       <v-toolbar-title>Secret Kitchen Diary</v-toolbar-title>
     </v-app-bar>
    
-      <v-main>
-        
-            <router-view></router-view>
-        
-      </v-main>
-  </v-app>
-  
+    <v-main>      
+      <router-view></router-view> 
+    </v-main>
+  </v-app> 
 </template>
 
 <script>
@@ -92,7 +89,8 @@
       drawer: null,
       items: [
         { text: 'Home', icon: 'mdi-home', link: "/" },
-        { text: 'Bookmarked', icon: 'mdi-bookmark', link: "/bookmarked"},
+        { text: 'Search Recipes', icon: 'mdi-book-open-page-variant', link: "/searchrecipes" },
+        { text: 'Personal Cookbook', icon: 'mdi-book', link: "/bookmarked"},
         { text: 'About', icon: 'mdi-help-box', link: "/about" },
       ],
     }),
