@@ -166,17 +166,25 @@
     }),
 
     created() {
+      // Check if the page has any rerouted data
       if (this.$route.query.q != null) {
+        // Rerouted query exists, quick search was performed on the home page
         this.mainIngredient = this.$route.query.q;
         this.searchRecipe();
       }
     },
 
     methods: {
+      /**
+       * Saves recipe data into database
+       */
       saveRecipe(recipe) {
         console.log("here");
       },
 
+      /**
+       * Query the Edamam API using the keyword from the form and return recipes
+       */ 
       searchRecipe(e) {
         if (e != null) {
           e.preventDefault();

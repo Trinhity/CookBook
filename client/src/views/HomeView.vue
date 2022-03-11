@@ -48,6 +48,9 @@
     },
 
     methods: {
+      /**
+       * Redirect to search page and pass the keyword as a parameter
+       */
       redirectToSearch(e) {
         e.preventDefault();  
         // redirect to the search page with parameter q

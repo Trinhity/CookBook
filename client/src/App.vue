@@ -89,6 +89,10 @@
       drawer: null,
       items: [
         { text: 'Home', icon: 'mdi-home', link: "/" },
+
+        // Not really supposed to be here
+        { text: 'Login', icon: 'mdi-account-arrow-right', link: "/login" },
+        
         { text: 'Search Recipes', icon: 'mdi-book-open-page-variant', link: "/searchrecipes" },
         { text: 'Personal Cookbook', icon: 'mdi-book', link: "/bookmarked"},
         { text: 'About', icon: 'mdi-help-box', link: "/about" },

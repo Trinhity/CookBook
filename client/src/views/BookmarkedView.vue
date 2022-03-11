@@ -26,32 +26,53 @@
           </v-hover> 
 
           <v-card-title  
-            class="brown white--text"
-            v-if="recipe.recipe.label.length > 100"
+            class="brown white--text grow"
+            text-truncate
+            d-inline-block
           >
-            {{ recipe.recipe.label.substring(0, 100)+"..." }}
-          </v-card-title>
-          <v-card-title class="brown white--text"
-            v-else
-          >
-            {{ recipe.recipe.label }}
+            <div class="headerClass">
+              {{ recipe.recipe.label }}
+            </div>
+            
           </v-card-title>
 
           <v-divider></v-divider>
 
-          <v-row no-gutters class="pa-4" >
-            <v-col>
-              <v-btn small outlined color="#9C6644">
-                {{ recipe.recipe.dishType[0] }}
-              </v-btn>
-            </v-col>
-            <v-col>
-              <v-btn small outlined color="#9C6644">
+           <v-row 
+            no-gutters 
+          >
+            <v-col 
+              class="d-flex flex-row pa-3"
+              sm="6"
+              cols="4"
+            >
+              <v-btn 
+                class="d-flex flex-column"
+                small 
+                outlined 
+                color="#9C6644"
+                v-if="recipe.recipe.mealType != null"
+              >
                 {{ recipe.recipe.mealType[0] }}
               </v-btn>
-            </v-col>
-            <v-col>
-              <v-btn small outlined color="#9C6644">
+            
+              <v-btn 
+                class="d-flex flex-column"
+                small 
+                outlined 
+                color="#9C6644"
+                v-if="recipe.recipe.dishType != null"
+              >
+                {{ recipe.recipe.dishType[0] }}
+              </v-btn>
+            
+              <v-btn 
+                class="d-flex flex-column"
+                small 
+                outlined 
+                color="#9C6644"
+                v-if="recipe.recipe.cuisineType != null"
+              >
                 {{ recipe.recipe.cuisineType[0] }}
               </v-btn>
             </v-col>
@@ -116,3 +137,12 @@
     },
   }
 </script>
+
+<style>
+  .headerClass{
+      white-space: nowrap ;
+      word-break: normal;
+      overflow: hidden ;
+      text-overflow: ellipsis;
+  }
+</style>
