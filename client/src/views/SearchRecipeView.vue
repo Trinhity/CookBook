@@ -166,7 +166,6 @@
     }),
 
     created() {
-      console.log(this.$route.query.q);
       if (this.$route.query.q != null) {
         this.mainIngredient = this.$route.query.q;
         this.searchRecipe();
@@ -210,16 +209,21 @@
 
         string += "&random=true";
 
+        // fetch data from Edamam API
         fetch(string, {
           method: "GET",
           headers: {},
         })
           .then((res) => res.json())
           .then((res) => {
+            // TODO check for response status 200
             if (res.hits.length > 0) {
               this.recipes = res.hits;
+              // TODO check for response status 400
             } else {
               this.errors = "Maybe you should invent this dish";
+
+              // DEBUGGING
               alert(
                 "Server returned " + res.status + " : " + res.statusText
               );
@@ -231,8 +235,9 @@
             };
           });
 
-        this.recipes = null;
-        this.errors = null;
+        // Reset local variables
+        this.recipes = [];
+        this.errors = [];
       },
     },
   }

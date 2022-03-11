@@ -2,8 +2,9 @@
   <v-container>
     <v-row>
       <v-col
-      sm="6" 
-              md="3">
+        sm="6" 
+        md="3"
+      >
         <h1>Hello name</h1>
       </v-col>
       <v-col>
@@ -48,8 +49,8 @@
 
     methods: {
       redirectToSearch(e) {
-        e.preventDefault();
-        
+        e.preventDefault();  
+        // redirect to the search page with parameter q
         this.$router.push({ path: "/searchrecipes", query: {"q": this.keyword} })  
            
       },
