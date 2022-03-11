@@ -166,10 +166,10 @@
     }),
 
     created() {
-      console.log(this.$route.params.q);
+      console.log(this.$route.query.q);
       if (this.$route.query.q != null) {
         this.mainIngredient = this.$route.query.q;
-        searchRecipe();
+        this.searchRecipe();
       }
     },
 
@@ -179,7 +179,10 @@
       },
 
       searchRecipe(e) {
-        e.preventDefault();
+        if (e != null) {
+          e.preventDefault();
+        }
+        
         var string =
           "https://api.edamam.com/api/recipes/v2?type=public&q=" +
           encodeURI(this.mainIngredient) +
