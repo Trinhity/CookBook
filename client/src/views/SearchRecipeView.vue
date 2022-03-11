@@ -67,9 +67,11 @@
             </div>
             <v-spacer></v-spacer>
             <v-btn
+              
+              right
               :class="fav ? 'red--text' : ''"
               icon
-              @click="fav = !fav"
+              @click="saveRecipe(recipe)"
             >
               <v-icon>mdi-heart</v-icon>
             </v-btn> 
@@ -118,7 +120,7 @@
           </v-row>
 
           <v-divider></v-divider>
-          
+
           <v-menu
             :close-on-content-click="false"
             :nudge-width="200"
@@ -158,17 +160,26 @@
       mainIngredient: '',
       recipes:[],
       fav: true,
-
       ingredientRules: [
         v => !!v || 'Ingredient is required',
       ]
     }),
 
+    created() {
+      console.log(this.$route.params.q);
+      if (this.$route.query.q != null) {
+        this.mainIngredient = this.$route.query.q;
+        searchRecipe();
+      }
+    },
+
     methods: {
+      saveRecipe(recipe) {
+        console.log("here");
+      },
+
       searchRecipe(e) {
         e.preventDefault();
-        
-        console.log(this.mainIngredient);
         var string =
           "https://api.edamam.com/api/recipes/v2?type=public&q=" +
           encodeURI(this.mainIngredient) +

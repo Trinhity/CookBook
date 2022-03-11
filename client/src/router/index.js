@@ -15,6 +15,7 @@ const routes = [
   {
     path: "/searchrecipes",
     name: "search",
+    props: true,
     component: SearchRecipeView,
   },
   {
