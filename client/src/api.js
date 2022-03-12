@@ -1,5 +1,6 @@
 import axios from "axios";
 const url = "/api/recipes";
+const userurl = "/api/users";
 
 export default class API {
   // Get all recipes from the database

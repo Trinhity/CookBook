@@ -1,4 +1,4 @@
-const CookBook = require("../models/recipes");
+const CookBookRecipes = require("../models/recipes");
 const fs = require("fs");
 
 module.exports = class API {
@@ -7,7 +7,7 @@ module.exports = class API {
     const imagename = req.file.filename;
     recipe.image = imagename;
     try {
-      await CookBook.create(recipe);
+      await CookBookRecipes.create(recipe);
       res.status(200).json({
         Message: "Recipe saved",
       });
@@ -20,7 +20,7 @@ module.exports = class API {
 
   static async getSavedRecipes(req, res) {
     try {
-      const recipes = await CookBook.find();
+      const recipes = await CookBookRecipes.find();
       res.status(200).json(recipes);
     } catch (err) {
       res.status(404).json({
@@ -32,7 +32,7 @@ module.exports = class API {
   static async getSavedRecipesByID(req, res) {
     const id = req.params.id;
     try {
-      const recipe = await CookBook.findById(id);
+      const recipe = await CookBookRecipes.findById(id);
       res.status(200).json(recipe);
     } catch (err) {
       res.status(404).json({
@@ -48,7 +48,7 @@ module.exports = class API {
   static async deleteSavedRecipesByID(req, res) {
     const id = req.params.id;
     try {
-      const result = await CookBook.findByIdAndDelete(id);
+      const result = await CookBookRecipes.findByIdAndDelete(id);
       if (result.image != "") {
         try {
           fs.unlinkSync("./uploads/" + result.image);

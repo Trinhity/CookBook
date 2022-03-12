@@ -12,7 +12,7 @@ module.exports = class API {
         bcrypt.hash(plainPassword, salt, function (err, hash) {
           user.username = req.body.username;
           user.password = hash;
-          const created = await CookBookUsers.create(user);
+          const created = CookBookUsers.create(user);
         });
       });
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const API = require("../controllers/api");
+const UserAPI = require("../controllers/userapi");
 const multer = require("multer");
 
 // multer middleware
@@ -22,5 +23,7 @@ router.get("/:id", API.getSavedRecipesByID);
 router.post("/", upload, API.saveRecipe);
 router.delete("/", API.deleteSavedRecipes);
 router.delete("/:id", API.deleteSavedRecipesByID);
+
+router.get("/login", UserAPI.authenticateUser);
 
 module.exports = router;
