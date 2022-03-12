@@ -220,7 +220,7 @@
         // fetch data from Edamam API
         fetch(string, {
           method: "GET",
-          headers: {},
+          headers: { "content-type": "application/json" },
         })
           .then((res) => res.json())
           .then((res) => {

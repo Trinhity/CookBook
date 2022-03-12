@@ -4,6 +4,7 @@
   "description": "Cookbook app using full stack vue and express",
   "main": "index.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
     "bootstrap": "^5.1.3",
     "cors": "^2.8.5",
