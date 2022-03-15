@@ -182,8 +182,14 @@
        * Saves recipe data into database
        */
       async saveRecipe(recipe) {     
+        if (this.fav) {
+          
+
+        } else {
+          const res = await API.saveRecipe(recipe.recipe); 
+        }
+         
         this.fav = !this.fav; 
-        const res = await API.saveRecipe(recipe.recipe);  
       },
 
       async deleteRecipe(recipe) {
