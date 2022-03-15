@@ -5,6 +5,7 @@ const UserAPI = require("../controllers/userapi");
 
 router.get("/", API.getSavedRecipes);
 router.get("/:id", API.getSavedRecipesByID);
+router.get("/:name", API.getSavedRecipesByName);
 router.post("/", API.saveRecipe);
 router.delete("/", API.deleteSavedRecipes);
 router.delete("/:id", API.deleteSavedRecipesByID);

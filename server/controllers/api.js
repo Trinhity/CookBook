@@ -46,9 +46,21 @@ module.exports = class API {
   }
 
   static async getSavedRecipesByID(req, res) {
-    const id = req.params.id;
+    const id = req.body.id;
     try {
       const recipe = await CookBookRecipes.findById(id);
+      res.status(200).json(recipe);
+    } catch (err) {
+      res.status(404).json({
+        Error: err.message,
+      });
+    }
+  }
+
+  static async getSavedRecipesByName(req, res) {
+    const name = req.body.label;
+    try {
+      const recipe = await CookBookRecipes.find({ "recipe.label": name });
       res.status(200).json(recipe);
     } catch (err) {
       res.status(404).json({
@@ -62,7 +74,7 @@ module.exports = class API {
   }
 
   static async deleteSavedRecipesByID(req, res) {
-    const id = req.params.id;
+    const id = req.body.id;
     try {
       const result = await CookBookRecipes.findByIdAndDelete(id);
       res.status(200).json({
