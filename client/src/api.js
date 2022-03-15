@@ -14,6 +14,12 @@ export default class API {
     return res.data;
   }
 
+  // Get recipe by name from the database
+  static async getRecipeByName(name) {
+    const res = await axios.get(`${url}/${name}`);
+    return res.data;
+  }
+
   // Save new recipe into database
   static async saveRecipe(recipe) {
     const res = await axios.post(url, recipe);

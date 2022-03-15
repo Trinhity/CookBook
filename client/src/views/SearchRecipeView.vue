@@ -67,20 +67,19 @@
             <div class="headerClass">
               {{ recipe.recipe.label }}
             </div>
-            <v-spacer></v-spacer>
-            <v-btn
-              
+            <v-spacer></v-spacer>           
+            <v-btn   
               right
-              :class="fav ? 'red--text' : ''"
+              :class="recipe.recipe.fav ? 'red--text' : ''"
               icon
               @click="saveRecipe(recipe)"
             >
               <v-icon>mdi-heart</v-icon>
-            </v-btn> 
+            </v-btn>            
           </v-card-title>
    
           <v-divider></v-divider>
-
+          
           <v-row 
             no-gutters 
           >
@@ -122,33 +121,32 @@
           </v-row>
 
           <v-divider></v-divider>
-          <v-card-actions>
-            <v-menu
-              :close-on-content-click="false"
-              :nudge-width="200"
-              offset-x
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="#B08968"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  Ingredients
-                </v-btn>
-              </template>
 
-              <v-list>
-                <v-list-item    
-                  v-for="ingredient in recipe.recipe.ingredientLines"
-                  :key="ingredient"
-                >                  
-                  <v-list-item-title>{{ ingredient }}</v-list-item-title>                 
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-card-actions>
+          <v-menu
+            :close-on-content-click="false"
+            :nudge-width="200"
+            offset-x
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="#B08968"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                Ingredients
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item    
+                v-for="ingredient in recipe.recipe.ingredientLines"
+                :key="ingredient"
+              >                  
+                <v-list-item-title>{{ ingredient }}</v-list-item-title>                 
+              </v-list-item>
+            </v-list>
+          </v-menu>         
         </v-card>    
       </v-col>
     </v-row> 
@@ -161,8 +159,7 @@
     name: 'Search',
     data: () => ({
       mainIngredient: '',
-      recipes:[],   
-      fav: false,
+      recipes:[],      
       ingredientRules: [
         v => !!v || 'Ingredient is required',
       ]
@@ -181,17 +178,23 @@
       /**
        * Saves recipe data into database
        */
-      async saveRecipe(recipe) {     
-        if (this.fav) {
-          
+      async saveRecipe(recipe) {    
+        console.log(recipe.recipe.fav);
+        if (recipe.recipe.fav) {
+          // deleterecipe
 
         } else {
-          const res = await API.saveRecipe(recipe.recipe); 
+
+            const res = await API.saveRecipe(recipe.recipe); 
+
         }
          
-        this.fav = !this.fav; 
+        recipe.recipe.fav = !recipe.recipe.fav;
       },
 
+      /**
+       * Deletes a saved recipe from the database
+       */
       async deleteRecipe(recipe) {
         console.log("here");
       },
@@ -241,6 +244,10 @@
             // TODO check for response status 200
             if (res.hits.length > 0) {
               this.recipes = res.hits;
+              this.recipes.map((recipe) => {
+                return recipe.recipe.fav = false; 
+              })
+              
               // TODO check for response status 400
             } else {
               this.errors = "Maybe you should invent this dish";
