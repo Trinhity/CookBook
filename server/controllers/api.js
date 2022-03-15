@@ -3,12 +3,28 @@ const fs = require("fs");
 
 module.exports = class API {
   static async saveRecipe(req, res) {
-    const recipe = req.body;
-    const imagename = req.file.filename;
-    recipe.image = imagename;
     try {
-      await CookBookRecipes.create(recipe);
-      res.status(200).json({
+      await CookBookRecipes.create({
+        recipe: {
+          uri: req.body.uri,
+          label: req.body.label,
+          image: req.body.image,
+          source: req.body.source,
+          url: req.body.url,
+          yield: req.body.yield,
+          dietLabels: req.body.dietLabels,
+          healthLabels: req.body.healthLabels,
+          cautions: req.body.cautions,
+          ingredients: req.body.ingredients,
+          calories: req.body.calories,
+          totalTime: req.body.totalTime,
+          cuisineType: req.body.cuisineType,
+          mealType: req.body.mealType,
+          dishType: req.body.dishType,
+        },
+      });
+
+      res.status(201).json({
         Message: "Recipe saved",
       });
     } catch (err) {
@@ -49,13 +65,6 @@ module.exports = class API {
     const id = req.params.id;
     try {
       const result = await CookBookRecipes.findByIdAndDelete(id);
-      if (result.image != "") {
-        try {
-          fs.unlinkSync("./uploads/" + result.image);
-        } catch (err) {
-          console.log(err);
-        }
-      }
       res.status(200).json({
         Message: "Recipe deleted",
       });

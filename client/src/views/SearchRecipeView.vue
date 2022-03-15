@@ -2,7 +2,7 @@
   <v-container>
     <h1>Search page</h1>
     <v-form
-      @submit="searchRecipe"
+      @submit.prevent="searchRecipe"
     >  
       <v-row>
         <v-col 
@@ -40,27 +40,29 @@
           class="d-flex flex-column"
           width="100%"
         >
-          <v-hover v-slot="{ hover }">  
-            <v-img 
-              height="250" 
-              :src="`${recipe.recipe.image}`"
-            >
-              <v-fade-transition>
-                <v-overlay
-                  v-if="hover"
-                  absolute
-                  color="grey"
-                >
-                  <v-btn>See recipe details</v-btn>
-                </v-overlay>
-              </v-fade-transition>
-            </v-img>
-          </v-hover> 
+          <v-card-actions>
+            <v-hover v-slot="{ hover }">  
+              <v-img 
+                height="250" 
+                :src="`${recipe.recipe.image}`"    
+              >
+                <v-fade-transition>
+                  <v-overlay
+                    v-if="hover"
+                    absolute
+                    color="grey"
+                  >
+                    <v-btn>See recipe details</v-btn>
+                  </v-overlay>
+                </v-fade-transition>
+              </v-img>
+            </v-hover> 
+          </v-card-actions>
 
           <v-card-title  
             class="brown white--text grow"
             text-truncate
-            d-inline-block
+            d-inline-block           
           >
             <div class="headerClass">
               {{ recipe.recipe.label }}
@@ -91,7 +93,7 @@
                 class="d-flex flex-column"
                 small 
                 outlined 
-                color="#9C6644"
+                color="#9C6644"               
                 v-if="recipe.recipe.mealType != null"
               >
                 {{ recipe.recipe.mealType[0] }}
@@ -101,7 +103,7 @@
                 class="d-flex flex-column"
                 small 
                 outlined 
-                color="#9C6644"
+                color="#9C6644"               
                 v-if="recipe.recipe.dishType != null"
               >
                 {{ recipe.recipe.dishType[0] }}
@@ -111,7 +113,7 @@
                 class="d-flex flex-column"
                 small 
                 outlined 
-                color="#9C6644"
+                color="#9C6644"               
                 v-if="recipe.recipe.cuisineType != null"
               >
                 {{ recipe.recipe.cuisineType[0] }}
@@ -120,32 +122,33 @@
           </v-row>
 
           <v-divider></v-divider>
+          <v-card-actions>
+            <v-menu
+              :close-on-content-click="false"
+              :nudge-width="200"
+              offset-x
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="#B08968"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  Ingredients
+                </v-btn>
+              </template>
 
-          <v-menu
-            :close-on-content-click="false"
-            :nudge-width="200"
-            offset-x
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="#B08968"
-                dark
-                v-bind="attrs"
-                v-on="on"
-              >
-                Ingredients
-              </v-btn>
-            </template>
-
-            <v-list>
-              <v-list-item
-                v-for="ingredient in recipe.recipe.ingredientLines"
-                :key="ingredient"
-              >
-                <v-list-item-title>{{ ingredient }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+              <v-list>
+                <v-list-item    
+                  v-for="ingredient in recipe.recipe.ingredientLines"
+                  :key="ingredient"
+                >                  
+                  <v-list-item-title>{{ ingredient }}</v-list-item-title>                 
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </v-card-actions>
         </v-card>    
       </v-col>
     </v-row> 
@@ -153,13 +156,13 @@
 </template>
 
 <script>
- 
-  export default {
+  import API from "../api";
+  export default {   
     name: 'Search',
     data: () => ({
       mainIngredient: '',
-      recipes:[],
-      fav: true,
+      recipes:[],   
+      fav: false,
       ingredientRules: [
         v => !!v || 'Ingredient is required',
       ]
@@ -178,7 +181,12 @@
       /**
        * Saves recipe data into database
        */
-      saveRecipe(recipe) {
+      async saveRecipe(recipe) {     
+        this.fav = !this.fav; 
+        const res = await API.saveRecipe(recipe.recipe);  
+      },
+
+      async deleteRecipe(recipe) {
         console.log("here");
       },
 

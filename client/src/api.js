@@ -1,6 +1,5 @@
 import axios from "axios";
 const url = "/api/recipes";
-const userurl = "/api/users";
 
 export default class API {
   // Get all recipes from the database
@@ -16,8 +15,8 @@ export default class API {
   }
 
   // Save new recipe into database
-  static async addRecipe(id) {
-    const res = await axios.post(url, id);
+  static async saveRecipe(recipe) {
+    const res = await axios.post(url, recipe);
     return res.data;
   }
 
