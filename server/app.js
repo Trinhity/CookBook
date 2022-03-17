@@ -26,5 +26,8 @@ mongoose
 // Routes
 app.use("/api/recipes", require("./routes/routes"));
 
+// AVA test
+module.exports = app;
+
 // Start server
-app.listen(port, () => console.log(`Server is running on ${port}`));
+// app.listen(port, () => console.log(`Server is running on ${port}`));

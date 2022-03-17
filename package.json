@@ -17,7 +17,18 @@
     "vue": "^3.2.29",
     "vue-basic-alert": "^1.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-polyfill": "^6.26.0",
+    "mongodb-memory-server-core": "^8.4.1",
+    "supertest": "^6.2.2"
+  },
+  "ava": {
+    "files": ["test/**/*"],
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ]
+  },
   "scripts": {
     "start": "node ./server/app.js",
     "dev": "nodemon ./server/app.js"
