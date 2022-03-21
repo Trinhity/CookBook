@@ -3,8 +3,8 @@ module.exports = defineConfig({
   transpileDependencies: ["vuetify"],
   devServer: {
     proxy: {
-      "/": {
-        target: "http://localhost:5000",
+      "/api": {
+        target: "http://localhost:5000/",
         ws: false,
       },
     },
