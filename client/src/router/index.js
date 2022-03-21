@@ -1,17 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import DashboardView from "../views/DashboardView.vue";
 import BookmarkedView from "../views/BookmarkedView.vue";
 import SearchRecipeView from "../views/SearchRecipeView.vue";
 import LoginView from "../views/LoginView.vue";
+import RegistrationView from "../views/RegistrationView";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
+    path: "/dashboard",
+    name: "dashboard",
+    props: true,
+    component: DashboardView,
   },
   {
     path: "/searchrecipes",
@@ -20,9 +22,15 @@ const routes = [
     component: SearchRecipeView,
   },
   {
-    path: "/login",
+    path: "/",
     name: "login",
+    props: true,
     component: LoginView,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: RegistrationView,
   },
   {
     path: "/bookmarked",
