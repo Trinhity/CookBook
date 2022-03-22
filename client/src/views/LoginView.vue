@@ -7,7 +7,7 @@
               <v-toolbar-title>Login</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
-              <form ref="form" @submit.prevent="login()">
+              <form ref="form" @submit.prevent="login">
                 <v-text-field
                   v-model="username"
                   name="username"
@@ -63,10 +63,10 @@
       }),
 
       methods: {
-        login(e) {
+        login() {
           const { username } = this;
           console.log(username + " logged in");
-          this.$router.push({ path: "/dashboard", params: {"username": username} }) 
+          this.$router.replace({ name: "dashboard", params: {username: username} }) 
         },
         // async login(e) {
         //   console.log("here");
@@ -104,13 +104,6 @@
                 "samesite=lax;" +
                 "max-age=60*60*24*15;";
         },
-
-        redirectToSDashboard(e) {
-        e.preventDefault();  
-        // redirect to the dashboard with parameter user
-        this.$router.replace({ path: "/dashboard", params: {"username": this.username} })  
-           
-      },
       }
     }
 </script>

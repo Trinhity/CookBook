@@ -4,10 +4,7 @@
     v-model="drawer"
     app
   >
-    <v-list 
-      color="#9C6644"
-      v-if="isLoggedIn == true"
-    >
+    <v-list color="#9C6644">
       <v-list-item class=" white--text" >
         <v-list-item-avatar>
           <v-icon x-large>
@@ -46,24 +43,10 @@
         </v-list-item-content>
       </v-list-item>  
     </v-list>
-    
-    <v-list
-      color="#9C6644"
-      v-else
-    >
-
-      <v-btn dense>
-        Sign in
-      </v-btn>
-
-    </v-list>
 
     <v-divider></v-divider>
 
-    <v-list 
-      dense
-      v-if="isLoggedIn == true"
-    >
+    <v-list dense>
       <v-list-item-group color="#B08968">
         <v-list-item
           v-for="(item, i) in items"
@@ -128,31 +111,17 @@
       drawer: null,
       items: [
         { text: 'Dashboard', icon: 'mdi-home', link: "/dashboard" },
-
-        // // Not really supposed to be here
-        // { text: 'Sign In', icon: 'mdi-account-arrow-right', link: "/login" },
-        
         { text: 'Search Recipes', icon: 'mdi-book-open-page-variant', link: "/searchrecipes" },
         { text: 'Personal Cookbook', icon: 'mdi-book', link: "/bookmarked"},
         { text: 'About', icon: 'mdi-help-box', link: "/about" },
       ],
-      username: null,
-      isLoggedIn: false
+      
 
     }),
 
     created() {
-      console.log(this.$route.params.username);
-      if (this.$route.params.username != null) {
-        this.username = this.$route.params.username;
-        this.isLoggedIn = true;
-      } else {
-        this.isLoggedIn = false;
-      }
-    },
-
-    components: {
-     
+      console.log(this.$route.params);
+      this.username = this.$route.params.username;
     },
 
     methods: {
