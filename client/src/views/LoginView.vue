@@ -64,8 +64,9 @@
 
       methods: {
         login(e) {
-          console.log(this.username);
-          this.$router.push({ path: "/dashboard", params: {"username": this.username} }) 
+          const { username } = this;
+          console.log(username + " logged in");
+          this.$router.push({ path: "/dashboard", params: {"username": username} }) 
         },
         // async login(e) {
         //   console.log("here");
@@ -107,7 +108,7 @@
         redirectToSDashboard(e) {
         e.preventDefault();  
         // redirect to the dashboard with parameter user
-        this.$router.push({ path: "/dashboard", params: {"username": this.username} })  
+        this.$router.replace({ path: "/dashboard", params: {"username": this.username} })  
            
       },
       }
