@@ -9,12 +9,12 @@
             <v-card-text>
               <form ref="form" @submit.prevent="login">
                 <v-text-field
-                  v-model="username"
-                  name="username"
-                  label="Username or e-mail"
+                  v-model="email"
+                  name="email"
+                  label="E-mail"
                   type="text"
                   placeholder="example@outlook.com"
-                  :rules="usernameRules"
+                  :rules="emailRules"
                   required
                 ></v-text-field>
                 
@@ -37,6 +37,10 @@
                 >
                   Login
                 </v-btn>
+                <v-spacer></v-spacer>
+                <router-link :to="{ path: '/register' }">
+                  Sign up
+                </router-link>
               </form>
             </v-card-text>
           </v-card>  
@@ -49,61 +53,52 @@
   import axios from "axios"
   export default {
       name: "Login",
-      data: () => ({  
-        
-        username: "",
+      data: () => ({        
+        email: "",
         password: "",
-        
         user: null,
         showPassword: false,
-        valid: true,
-        usernameRules: [
-          v => !!v || 'Username is required',
+        emailRules: [
+          v => !!v || 'E-mail is required',
         ],
       }),
 
       methods: {
-        login() {
-          const { username } = this;
-          console.log(username + " logged in");
-          this.$router.replace({ name: "dashboard", params: {username: username} }) 
+        async login(e) {
+          await axios
+          .post("http://localhost:8080/login", {
+            params: {
+              email: this.email,
+              password: this.password,
+            },
+            headers: {
+              "content-type": "application/json",
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            this.user = res;
+            this.setLoginStatus();
+            this.redirectToDashboard();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         },
-        // async login(e) {
-        //   console.log("here");
-        //   if (e != null) {
-        //     e.preventDefault();
-        //   }
-        //   axios
-        //   .post("http://localhost:8080/login", {
-        //     params: {
-        //       email: this.state.username,
-        //       password: this.state.password,
-        //     },
-        //     headers: {
-        //       "content-type": "application/json",
-        //     },
-        //   })
-        //   .then((res) => {
-        //     console.log(res);
-        //     this.user = res;
-        //     this.setLoginStatus();
-        //     this.redirectToSDashboard();
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
-        //   this.state.username= "";
-        //   this.state.password= "";
-        // },
 
         setLoginStatus() {
             document.cookie =
                 "verification_string=test_verification_" +
-                this.state.username +
+                this.user.username +
                 ";secure;" +
                 "samesite=lax;" +
                 "max-age=60*60*24*15;";
         },
+
+        redirectToDashboard() {
+          console.log(this.user.username + " logged in");
+          this.$router.replace({ name: "dashboard", params: {user: this.user} }) 
+        }
       }
     }
 </script>
