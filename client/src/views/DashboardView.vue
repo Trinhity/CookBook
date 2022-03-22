@@ -121,7 +121,7 @@
 
     created() {
       console.log(this.$route.params);
-      this.username = this.$route.params.username;
+      this.username = this.$route.params.user;
     },
 
     methods: {
