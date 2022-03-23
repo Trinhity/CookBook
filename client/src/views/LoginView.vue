@@ -199,10 +199,10 @@
       },
 
       methods: {
-        login() {
-          console.log(this.loginEmail);
-          this.$router.replace({ name: "dashboard", params: {user: this.loginEmail} });
-        },
+          login() {
+            console.log(this.loginEmail);
+            this.$router.replace({ name: "dashboard", params: {user: this.loginEmail} });
+          },
 
         // async login() {
         //   try {
