@@ -98,8 +98,8 @@
 
             <v-list>
               <v-list-item
-                v-for="ingredient in recipe.recipe.ingredientLines"
-                :key="ingredient"
+                v-for="(ingredient, i) in recipe.recipe.ingredientLines"
+                :key="i"
               >
                 <v-list-item-title>{{ ingredient }}</v-list-item-title>
               </v-list-item>
@@ -109,11 +109,13 @@
         </v-card>    
       </v-col>
     </v-row> 
+    <NavBar />
   </v-container>   
 </template>
 
 <script>
   import API from "../api"
+  import NavBar from "../components/NavBar.vue";
 
   export default {
     name: 'bookmarked',
@@ -133,7 +135,7 @@
     },
 
     components: {
-      
+      NavBar
     },
   }
 </script>

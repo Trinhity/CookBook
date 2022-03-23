@@ -1,21 +1,12 @@
 <template>
   <v-container>
     <v-row>
-      <v-col
-        sm="6" 
-        md="3"
-      >
-        <h1>Hello name</h1>
-      </v-col>
       <v-col>
         <v-form
-          @submit="redirectToSearch"
+          @submit.prevent="redirectToSearch"
         >  
           <v-row>
-            <v-col 
-              sm="6" 
-              md="3">
-              
+            <v-col sm="6" md="3">          
               <v-text-field
                 v-model="keyword"       
                 label="Quick search"
@@ -31,20 +22,23 @@
           </v-row>           
         </v-form>
       </v-col>
-    </v-row>
-    
+    </v-row>  
+    <NavBar />
   </v-container>
 </template>
 
 <script>
+  import NavBar from "../components/NavBar.vue";
   export default {
-    name: 'Home',
+    name: 'Dashboard',
     data: () => ({
-        keyword: "",
+      keyword: "",
+      
     }),
+    
 
     components: {
-     
+      NavBar
     },
 
     methods: {

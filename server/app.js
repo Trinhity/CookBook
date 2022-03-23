@@ -24,7 +24,8 @@ mongoose
   .catch((err) => console.log(err));
 
 // Routes
-app.use("/api/recipes", require("./routes/routes"));
+app.use("/api/recipes", require("./routes/recipeRoutes"));
+app.use("/user", require("./routes/userRoutes"));
 
 // Start server
 app.listen(port, () => console.log(`Server is running on ${port}`));

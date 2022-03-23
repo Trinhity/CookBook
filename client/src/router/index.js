@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import DashboardView from "../views/DashboardView.vue";
 import BookmarkedView from "../views/BookmarkedView.vue";
 import SearchRecipeView from "../views/SearchRecipeView.vue";
 import LoginView from "../views/LoginView.vue";
@@ -9,9 +9,13 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
+    path: "/dashboard",
+    name: "dashboard",
+    props: {},
+    component: DashboardView,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/searchrecipes",
@@ -20,8 +24,9 @@ const routes = [
     component: SearchRecipeView,
   },
   {
-    path: "/login",
+    path: "/",
     name: "login",
+    props: true,
     component: LoginView,
   },
   {
@@ -44,6 +49,19 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (localStorage.getItem("jwt") == null) {
+      next({
+        path: "/",
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
