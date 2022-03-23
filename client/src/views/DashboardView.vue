@@ -120,18 +120,13 @@
 
     }),
 
-<<<<<<< HEAD
     async created() {
       if (!this.$store.getters.isLoggedIn) {
         this.$router.push('/login');
       }
-      this.username = this.$store.getters.getUser.username;
+      // this.username = this.$store.getters.getUser.username;
+      this.username = this.$route.params.user;
       this.secretMessage = await AuthenticationAPI.getSecretContent();
-=======
-    created() {
-      console.log(this.$route.params);
-      this.username = this.$route.params.username;
->>>>>>> parent of 06357dc (Merge registration and login pages)
     },
 
     methods: {

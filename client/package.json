@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "@mdi/font": "^6.5.95",
-    "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "sass": "~1.32.0",
