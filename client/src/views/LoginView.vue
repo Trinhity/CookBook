@@ -199,28 +199,28 @@
       },
 
       methods: {
-          login() {
-            console.log(this.loginEmail);
-            this.$router.replace({ name: "dashboard", params: {user: this.loginEmail} });
-          },
+          // login() {
+          //   console.log(this.loginEmail);
+          //   this.$router.replace({ name: "dashboard", params: {user: this.loginEmail} });
+          // },
 
-        // async login() {
-        //   try {
-        //     const credentials = {
-        //       email: this.loginEmail,
-        //       password: this.loginPassword
-        //     };
-        //     const res = await AuthenticationAPI.login(credentials);
+        async login() {
+          try {
+            const credentials = {
+              email: this.loginEmail,
+              password: this.loginPassword
+            };
+            const res = await AuthenticationAPI.login(credentials);
 
-        //     const token = res.token;
-        //     const user = res.user;
-        //     this.$store.dispatch('login', { token, user });
+            const token = res.token;
+            const user = res.user;
+            this.$store.dispatch('login', { token, user });
             
-        //     this.$router.push({ name: 'dashboard', params: { user: user }})
-        //   } catch (err) {
-
-        //   }
-        // },
+            this.$router.push({ name: 'dashboard', params: { user: user }})
+          } catch (err) {
+            console.log(err);
+          }
+        },
 
         async register() {
           try {
@@ -233,7 +233,8 @@
             const res = await AuthenticationAPI.register(credentials);
             this.$router.push({ name: "login" });
           } catch(err) {
-            this.$router.push({ name: "login", params: {error: err.response.data}});
+            console.log(err);
+            // this.$router.push({ name: "login", params: {error: err}});
           }
         },
 

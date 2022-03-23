@@ -5,7 +5,7 @@ const userSchema = mongoose.Schema({
   username: "string",
   password: "string",
   profilepic: "string",
-  last_login: Date.now(),
+  last_login: 0,
 });
 
 module.exports = mongoose.model("users", userSchema);

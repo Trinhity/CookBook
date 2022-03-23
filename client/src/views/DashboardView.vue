@@ -124,8 +124,8 @@
       if (!this.$store.getters.isLoggedIn) {
         this.$router.push('/login');
       }
-      // this.username = this.$store.getters.getUser.username;
-      this.username = this.$route.params.user;
+      this.username = this.$store.getters.getUser.username;
+      // this.username = this.$route.params.user;
       this.secretMessage = await AuthenticationAPI.getSecretContent();
     },
 

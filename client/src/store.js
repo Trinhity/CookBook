@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
+import Axios from "axios";
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
@@ -38,7 +38,7 @@ export default new Vuex.Store({
       commit("SET_TOKEN", token);
       commit("SET_USER", user);
       // set auth header
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      Axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     },
     logout: ({ commit }) => {
       commit("RESET", "");
