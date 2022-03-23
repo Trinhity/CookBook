@@ -13,7 +13,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content>      
-          <v-list-item-title>{{ username }}</v-list-item-title>
+          <v-list-item-title>{{ user.fname + " " + user.lname }}</v-list-item-title>
           <v-list-item-subtitle @click="logout">Logout</v-list-item-subtitle>
         </v-list-item-content>
       
@@ -73,7 +73,7 @@
   <v-container>
     <v-row>
       <v-col sm="6"  md="3">
-        <h1>Hello {{ username }}</h1>
+        <h1>Hello {{ user.fname + " " + user.lname }}</h1>
       </v-col>
       <v-col>
         <v-form
@@ -109,7 +109,7 @@
     name: 'Dashboard',
     data: () => ({
       keyword: "",
-      username: "",
+      user: null,
       drawer: null,
       items: [
         { text: 'Dashboard', icon: 'mdi-home', link: "/dashboard" },
@@ -130,9 +130,10 @@
         let token = localStorage.getItem("jwt");
         let decoded = VueJwtDecode.decode(token);
         this.user = decoded;
+        console.log(this.user.fname);
       },
 
-      logUserOut() {
+      logout() {
         localStorage.removeItem("jwt");
         this.$router.push("/");
       },
