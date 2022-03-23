@@ -103,7 +103,8 @@
 </template>
 
 <script>
-  import AuthenticationAPI from '@/services/AuthService.js';
+  import VueJwtDecode from "vue-jwt-decode";
+
   export default {
     name: 'Dashboard',
     data: () => ({
@@ -121,18 +122,19 @@
     }),
 
     async created() {
-      if (!this.$store.getters.isLoggedIn) {
-        this.$router.push('/login');
-      }
-      this.username = this.$store.getters.getUser.username;
-      // this.username = this.$route.params.user;
-      this.secretMessage = await AuthenticationAPI.getSecretContent();
+      this.getUserDetails();
     },
 
     methods: {
-      logout() {
-        this.$store.dispatch('logout');
-        this.$router.replace({name: "login"})
+      getUserDetails() {
+        let token = localStorage.getItem("jwt");
+        let decoded = VueJwtDecode.decode(token);
+        this.user = decoded;
+      },
+
+      logUserOut() {
+        localStorage.removeItem("jwt");
+        this.$router.push("/");
       },
 
       /**

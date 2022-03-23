@@ -2,13 +2,13 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
-import store from "./store";
 import axios from "axios";
 
+const base = axios.create({
+  baseURL: "http://localhost:5000",
+});
 Vue.config.productionTip = false;
-
-// set auth header
-axios.defaults.headers.common["Authorization"] = `Bearer ${store.state.token}`;
+Vue.prototype.$http = base;
 
 new Vue({
   router,

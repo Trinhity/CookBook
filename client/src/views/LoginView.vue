@@ -29,7 +29,7 @@
                 <v-row>
                   <v-col cols="12">
                     <v-text-field 
-                      v-model="loginEmail" 
+                      v-model="login.email" 
                       :rule="loginEmailRules" 
                       label="E-mail" 
                       required
@@ -37,7 +37,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field 
-                      v-model="loginPassword" 
+                      v-model="login.password" 
                       :append-icon="show1?'eye':'eye-off'" 
                       :rule="passwordRules" 
                       :type="show1 ? 'text' : 'password'" 
@@ -60,7 +60,7 @@
                       :disabled="!valid" 
                       outlined
                       color="#9C6644" 
-                      @click="login"
+                      @click="loginUser"
                     >
                       Login 
                     </v-btn>
@@ -82,7 +82,7 @@
                 <v-row>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field 
-                      v-model="firstName" 
+                      v-model="registration.firstname" 
                       label="First Name" 
                       maxlength="20" 
                       required
@@ -90,7 +90,7 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field 
-                      v-model="lastName" 
+                      v-model="registration.lastname" 
                       label="Last Name"
                       maxlength="20" 
                       required
@@ -98,7 +98,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field 
-                      v-model="email" 
+                      v-model="registration.email" 
                       :rule="emailRules" 
                       label="E-mail"
                       required
@@ -106,7 +106,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field 
-                      v-model="password" 
+                      v-model="registration.password" 
                       :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
                       :rule="passwordRules" 
                       :type="show1 ? 'text' : 'password'" 
@@ -140,7 +140,7 @@
                       :disabled="!valid" 
                       outlined
                       color="#9C6644" 
-                      @click="register"
+                      @click="registerUser"
                     >
                       Register
                     </v-btn>
@@ -157,8 +157,7 @@
 </template>
  
 <script>
-  import AuthenticationAPI from '@/services/AuthService.js';
-
+  import axios from "axios";
   export default {
       name: "Login",
       data: () => ({
@@ -168,19 +167,26 @@
             {name:"Login", icon:"mdi-account"},
             {name:"Register", icon:"mdi-account-outline"}
         ],
+
         valid: true,
-        user: null,
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
+        registration: {
+          firstname: "",
+          lastname: "",
+          email: "",
+          password: "",
+        },
+        
         verify: "",
-        loginPassword: "",
-        loginEmail: "",
+        login: {
+          password: "",
+          email: "",
+        },
+        
         loginEmailRules: [
           value => !!value || "Required",
           value => /.+@.+\..+/.test(value) || "E-mail must be valid"
         ],
+
         emailRules: [
           value => !!value || "Required",
           value => /.+@.+\..+/.test(value) || "E-mail must be valid"
@@ -204,44 +210,48 @@
           //   this.$router.replace({ name: "dashboard", params: {user: this.loginEmail} });
           // },
 
-        async login() {
+        async loginUser() {
           try {
-            const credentials = {
-              email: this.loginEmail,
-              password: this.loginPassword
-            };
-            const res = await AuthenticationAPI.login(credentials);
-
-            const token = res.token;
-            const user = res.user;
-            this.$store.dispatch('login', { token, user });
-            
-            this.$router.push({ name: 'dashboard', params: { user: user }})
+            let response = await this.$http.post("/user/login", this.login);
+            let token = response.data.token;
+            localStorage.setItem("jwt", token);
+            if (token) {
+              console.log("Successful login");
+              this.setLoginStatus();
+              this.$router.push({ name: "dashboard" });
+            }
           } catch (err) {
-            console.log(err);
+            console.log(err.response);
           }
         },
 
-        async register() {
-          try {
-            const credentials = {
-              email: this.email,
-              password: this.password,
-              firstname: this.firstName,
-              lastname: this.lastName
-            };
-            const res = await AuthenticationAPI.register(credentials);
-            this.$router.push({ name: "login" });
-          } catch(err) {
+        async registerUser() {
+          const res = await this.$http.post("/user/register", this.registration)
+          .then(res => {
+            console.log(res);
+            const token = res.data.token;
+            if (token) {
+              localStorage.setItem("jwt", token);
+              console.log("Successful registration");
+              this.$router.push("/");
+              
+            } else {
+              console.log("Something went wrong");
+            }
+          }).catch (err => {
             console.log(err);
-            // this.$router.push({ name: "login", params: {error: err}});
-          }
+            if (err.status == 409) {
+              console.log(err.message);
+            } else {
+              console.log(err.message);
+            }
+          });
         },
 
         setLoginStatus() {
             document.cookie =
                 "verification_string=test_verification_" +
-                this.user.firstname + "_" + this.user.lastname
+                this.login.email
                 ";secure;" +
                 "samesite=lax;" +
                 "max-age=60*60*24*15;";

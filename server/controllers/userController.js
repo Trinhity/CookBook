@@ -11,15 +11,16 @@ module.exports = class UserAPI {
         });
       }
       const user = new CookBookUsers({
-        name: req.body.name,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.password,
       });
       let data = await user.save();
-      const token = await user.generateAuthToken(); // here it is calling the method that we created in the model
+      const token = await user.generateAuthToken();
       res.status(201).json({ data, token });
     } catch (err) {
-      res.status(400).json({ err: err });
+      res.status(400).json({ err: err.message });
     }
   }
 
@@ -36,7 +37,7 @@ module.exports = class UserAPI {
       const token = await user.generateAuthToken();
       res.status(201).json({ user, token });
     } catch (err) {
-      res.status(400).json({ err: err });
+      res.status(400).json({ err: err.message });
     }
   }
 
