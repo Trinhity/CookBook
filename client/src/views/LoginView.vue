@@ -1,159 +1,52 @@
 <template>
-<v-app>
-  <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px">
-    <div>
-      <v-tabs 
-        v-model="tab" 
-        show-arrows 
-        background-color="#9C6644" 
-        icons-and-text 
-        dark 
-        grow
-      >
-        <v-tabs-slider color="#9C6644"></v-tabs-slider>
-        <v-tab 
-          v-for="i in tabs" 
-          :key="i.name"
-        >
-          <v-icon large>{{ i.icon }}</v-icon>
-          <div class="caption py-1">{{ i.name }}</div>
-        </v-tab>
-        <v-tab-item>
-          <v-card class="px-4">
+  <v-container fluid fill-height>
+    <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md4>
+          <v-card class="elevation-12">
+            <v-toolbar dark color="#9C6644">
+              <v-toolbar-title>Login</v-toolbar-title>
+            </v-toolbar>
             <v-card-text>
-              <v-form 
-                ref="loginForm" 
-                v-model="valid" 
-                lazy-validation
-              >
-                <v-row>
-                  <v-col cols="12">
-                    <v-text-field 
-                      v-model="loginEmail" 
-                      :rule="loginEmailRules" 
-                      label="E-mail" 
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field 
-                      v-model="loginPassword" 
-                      :append-icon="show1?'eye':'eye-off'" 
-                      :rule="passwordRules" 
-                      :type="show1 ? 'text' : 'password'" 
-                      name="input-10-1" 
-                      label="Password" 
-                      hint="At least 8 characters" 
-                      counter @click:append="show1 = !show1"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col class="d-flex" cols="12" sm="6" xsm="12">
-                  </v-col>
-
-                  <v-spacer></v-spacer>
-
-                  <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                    <v-btn 
-                      x-large 
-                      block 
-                      :disabled="!valid" 
-                      outlined
-                      color="#9C6644" 
-                      @click="login"
-                    >
-                      Login 
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-form>
+              <form ref="form" @submit.prevent="login">
+                <v-text-field
+                  v-model="email"
+                  name="email"
+                  label="E-mail"
+                  type="text"
+                  placeholder="example@outlook.com"
+                  :rules="emailRules"
+                  required
+                ></v-text-field>
+                
+                <v-text-field
+                  v-model="password"
+                  name="password"
+                  label="Password"
+                  :type="showPassword ? 'text' : 'password'"
+                  placeholder="Password"
+                  required                            
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="showPassword = !showPassword"
+                ></v-text-field>
+                <v-btn 
+                  type="submit" 
+                  class="mt-4" 
+                  color="#9C6644" 
+                  value="log in"
+                  outlined 
+                >
+                  Login
+                </v-btn>
+                <v-spacer></v-spacer>
+                <router-link :to="{ path: '/register' }">
+                  Sign up
+                </router-link>
+              </form>
             </v-card-text>
-          </v-card>
-        </v-tab-item>
-
-        <v-tab-item>
-          <v-card class="px-4">
-            <v-card-text>
-              <v-form 
-                ref="registerForm" 
-                v-model="valid" 
-                lazy-validation
-              >
-                <v-row>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field 
-                      v-model="firstName" 
-                      label="First Name" 
-                      maxlength="20" 
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field 
-                      v-model="lastName" 
-                      label="Last Name"
-                      maxlength="20" 
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field 
-                      v-model="email" 
-                      :rule="emailRules" 
-                      label="E-mail"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field 
-                      v-model="password" 
-                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
-                      :rule="passwordRules" 
-                      :type="show1 ? 'text' : 'password'" 
-                      name="input-10-1" 
-                      label="Password" 
-                      hint="At least 8 characters" 
-                      counter 
-                      @click:append="show1 = !show1"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field 
-                      block 
-                      v-model="verify" 
-                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
-                      :rule="[passwordRules, passwordMatch]" 
-                      :type="show1 ? 'text' : 'password'"
-                      name="input-10-1" 
-                      label="Confirm Password" 
-                      counter 
-                      @click:append="show1 = !show1"
-                      required
-                     ></v-text-field>
-                  </v-col>
-                  <v-spacer></v-spacer>
-                  <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-                    <v-btn 
-                      x-large 
-                      block 
-                      :disabled="!valid" 
-                      outlined
-                      color="#9C6644" 
-                      @click="register"
-                    >
-                      Register
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs>
-    </div>
-  </v-dialog>
-</v-app>
+          </v-card>  
+        </v-flex>
+    </v-layout>
+  </v-container>
 </template>
  
 <script>
@@ -161,91 +54,52 @@
 
   export default {
       name: "Login",
-      data: () => ({
-        dialog: true,
-        tab: 0,
-        tabs: [
-            {name:"Login", icon:"mdi-account"},
-            {name:"Register", icon:"mdi-account-outline"}
-        ],
-        valid: true,
-        user: null,
-        firstName: "",
-        lastName: "",
+      data: () => ({        
         email: "",
         password: "",
-        verify: "",
-        loginPassword: "",
-        loginEmail: "",
-        loginEmailRules: [
-          value => !!value || "Required",
-          value => /.+@.+\..+/.test(value) || "E-mail must be valid"
-        ],
+        user: null,
+        showPassword: false,
         emailRules: [
-          value => !!value || "Required",
-          value => /.+@.+\..+/.test(value) || "E-mail must be valid"
+          v => !!v || 'E-mail is required',
         ],
-
-        show1: false,
-        passwordRules: [
-          value => (value && value.length >= 8) || "Min 8 characters"
-        ]
       }),
 
-      computed: {
-        passwordMatch() {
-          return () => this.password === this.verify || "Password must match";
-        }
-      },
-
       methods: {
-        // login() {
-        //   console.log(this.loginEmail);
-        //   this.$router.replace({ name: "dashboard", params: {user: this.loginEmail} });
-        // },
-
-        async login() {
-          try {
-            const credentials = {
-              email: this.loginEmail,
-              password: this.loginPassword
-            };
-            const res = await AuthenticationAPI.login(credentials);
-
-            const token = res.token;
-            const user = res.user;
-            this.$store.dispatch('login', { token, user });
-            
-            this.$router.push({ name: 'dashboard', params: { user: user }})
-          } catch (err) {
-
-          }
-        },
-
-        async register() {
-          try {
-            const credentials = {
+        async login(e) {
+          await axios
+          .post("http://localhost:8080/login", {
+            params: {
               email: this.email,
               password: this.password,
-              firstname: this.firstName,
-              lastname: this.lastName
-            };
-            const res = await AuthenticationAPI.register(credentials);
-            this.$router.push({ name: "login" });
-          } catch(err) {
-            this.$router.push({ name: "login", params: {error: err.response.data}});
-          }
+            },
+            headers: {
+              "content-type": "application/json",
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            this.user = res;
+            this.setLoginStatus();
+            this.redirectToDashboard();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         },
 
         setLoginStatus() {
             document.cookie =
                 "verification_string=test_verification_" +
-                this.user.firstname + "_" + this.user.lastname
+                this.user.username +
                 ";secure;" +
                 "samesite=lax;" +
                 "max-age=60*60*24*15;";
         },
-      },
 
+        redirectToDashboard() {
+          console.log(this.user.username + " logged in");
+          this.$router.replace({ name: "dashboard", params: {user: this.user} }) 
+        }
+      }
     }
 </script>

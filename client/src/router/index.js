@@ -4,6 +4,7 @@ import DashboardView from "../views/DashboardView.vue";
 import BookmarkedView from "../views/BookmarkedView.vue";
 import SearchRecipeView from "../views/SearchRecipeView.vue";
 import LoginView from "../views/LoginView.vue";
+import RegistrationView from "../views/RegistrationView";
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,11 @@ const routes = [
     name: "login",
     props: true,
     component: LoginView,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: RegistrationView,
   },
   {
     path: "/bookmarked",
