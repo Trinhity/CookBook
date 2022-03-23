@@ -30,7 +30,7 @@
                   <v-col cols="12">
                     <v-text-field 
                       v-model="login.email" 
-                      :rule="loginEmailRules" 
+                      :rules="loginEmailRules" 
                       label="E-mail" 
                       required
                     ></v-text-field>
@@ -38,13 +38,14 @@
                   <v-col cols="12">
                     <v-text-field 
                       v-model="login.password" 
-                      :append-icon="show1?'eye':'eye-off'" 
-                      :rule="passwordRules" 
-                      :type="show1 ? 'text' : 'password'" 
+                      :append-icon="show ? 'eye':'eye-off'" 
+                      :rules="passwordRules" 
+                      :type="show ? 'text' : 'password'" 
                       name="input-10-1" 
                       label="Password" 
                       hint="At least 8 characters" 
-                      counter @click:append="show1 = !show1"
+                      counter 
+                      @click:append="show = !show"
                       required
                     ></v-text-field>
                   </v-col>
@@ -99,7 +100,7 @@
                   <v-col cols="12">
                     <v-text-field 
                       v-model="registration.email" 
-                      :rule="emailRules" 
+                      :rules="emailRules" 
                       label="E-mail"
                       required
                     ></v-text-field>
@@ -107,28 +108,28 @@
                   <v-col cols="12">
                     <v-text-field 
                       v-model="registration.password" 
-                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
-                      :rule="passwordRules" 
-                      :type="show1 ? 'text' : 'password'" 
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
+                      :rules="passwordRules" 
+                      :type="show ? 'text' : 'password'" 
                       name="input-10-1" 
                       label="Password" 
                       hint="At least 8 characters" 
                       counter 
-                      @click:append="show1 = !show1"
+                      @click:append="show = !show"
                       required
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field 
                       block 
-                      v-model="verify" 
-                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
-                      :rule="[passwordRules, passwordMatch]" 
-                      :type="show1 ? 'text' : 'password'"
+                      v-model="registration.verify" 
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
+                      :rules="passwordMatchRules" 
+                      :type="show ? 'text' : 'password'"
                       name="input-10-1" 
                       label="Confirm Password" 
                       counter 
-                      @click:append="show1 = !show1"
+                      @click:append="show = !show"
                       required
                      ></v-text-field>
                   </v-col>
@@ -173,9 +174,9 @@
           lastname: "",
           email: "",
           password: "",
+          verify: "",
         },
         
-        verify: "",
         login: {
           password: "",
           email: "",
@@ -191,24 +192,21 @@
           value => /.+@.+\..+/.test(value) || "E-mail must be valid"
         ],
 
-        show1: false,
+        show: false,
+
         passwordRules: [
           value => (value && value.length >= 8) || "Min 8 characters"
+        ],
+
+        passwordMatchRules: [
+          value => (value && value == this.registration.password) || "Passwords do not match"
         ]
       }),
 
-      computed: {
-        passwordMatch() {
-          return () => this.password === this.verify || "Password must match";
-        }
-      },
-
       methods: {
-          // login() {
-          //   console.log(this.loginEmail);
-          //   this.$router.replace({ name: "dashboard", params: {user: this.loginEmail} });
-          // },
-
+        /**
+         * Sends user login inputs to server and validates user info
+         */
         async loginUser() {
           try {
             let response = await this.$http.post("/user/login", this.login);
@@ -224,6 +222,9 @@
           }
         },
 
+        /**
+         * Creates a new user and stores their first name, last name, email, and hashed password to the database
+         */
         async registerUser() {
           const res = await this.$http.post("/user/register", this.registration)
           .then(res => {
