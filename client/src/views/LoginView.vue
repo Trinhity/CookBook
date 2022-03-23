@@ -60,7 +60,7 @@
                       :disabled="!valid" 
                       outlined
                       color="#9C6644" 
-                      @click="validate"
+                      @click="login"
                     >
                       Login 
                     </v-btn>
@@ -138,8 +138,9 @@
                       x-large 
                       block 
                       :disabled="!valid" 
-                      color="success" 
-                      @click="validate"
+                      outlined
+                      color="#9C6644" 
+                      @click="register"
                     >
                       Register
                     </v-btn>
@@ -156,7 +157,8 @@
 </template>
  
 <script>
-  import axios from "axios"
+  import AuthenticationAPI from '@/services/AuthService.js';
+
   export default {
       name: "Login",
       data: () => ({
@@ -197,46 +199,43 @@
       },
 
       methods: {
-        login() {
-          console.log(this.loginEmail);
-          this.$router.replace({ name: "dashboard", params: {user: this.loginEmail} });
-        },
-
-        // async login(e) {
-        //   await axios
-        //   .post("http://localhost:8080/login", {
-        //     params: {
-        //       email: this.email,
-        //       password: this.password,
-        //     },
-        //     headers: {
-        //       "content-type": "application/json",
-        //     },
-        //   })
-        //   .then((res) => {
-        //     console.log(res);
-        //     this.user = res;
-        //     this.setLoginStatus();
-        //     this.redirectToDashboard();
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
+        // login() {
+        //   console.log(this.loginEmail);
+        //   this.$router.replace({ name: "dashboard", params: {user: this.loginEmail} });
         // },
 
-        validate() {
-          if (this.$refs.loginForm.validate()) {
-            this.login();
+        async login() {
+          try {
+            const credentials = {
+              email: this.loginEmail,
+              password: this.loginPassword
+            };
+            const res = await AuthenticationAPI.login(credentials);
+
+            const token = res.token;
+            const user = res.user;
+            this.$store.dispatch('login', { token, user });
+            
+            this.$router.push({ name: 'dashboard', params: { user: user }})
+          } catch (err) {
+
           }
         },
-        reset() {
-          this.$refs.form.reset();
-        },
-        resetValidation() {
-          this.$refs.form.resetValidation();
-        },
 
-        
+        async register() {
+          try {
+            const credentials = {
+              email: this.email,
+              password: this.password,
+              firstname: this.firstName,
+              lastname: this.lastName
+            };
+            const res = await AuthenticationAPI.register(credentials);
+            this.$router.push({ name: "login" });
+          } catch(err) {
+            this.$router.push({ name: "login", params: {error: err.response.data}});
+          }
+        },
 
         setLoginStatus() {
             document.cookie =
@@ -246,11 +245,6 @@
                 "samesite=lax;" +
                 "max-age=60*60*24*15;";
         },
-
-        redirectToDashboard() {
-          console.log(this.user.firstname + " logged in");
-          this.$router.replace({ name: "dashboard", params: {user: this.user} }) 
-        }
       },
 
     }

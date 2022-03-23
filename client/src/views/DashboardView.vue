@@ -103,6 +103,7 @@
 </template>
 
 <script>
+  import AuthenticationAPI from '@/services/AuthService.js';
   export default {
     name: 'Dashboard',
     data: () => ({
@@ -119,13 +120,17 @@
 
     }),
 
-    created() {
-      console.log(this.$route.params);
-      this.username = this.$route.params.user;
+    async created() {
+      if (!this.$store.getters.isLoggedIn) {
+        this.$router.push('/login');
+      }
+      this.username = this.$store.getters.getUser.username;
+      this.secretMessage = await AuthenticationAPI.getSecretContent();
     },
 
     methods: {
       logout() {
+        this.$store.dispatch('logout');
         this.$router.replace({name: "login"})
       },
 
