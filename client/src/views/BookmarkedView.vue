@@ -109,11 +109,13 @@
         </v-card>    
       </v-col>
     </v-row> 
+    <NavBar />
   </v-container>   
 </template>
 
 <script>
   import API from "../api"
+  import NavBar from "../components/NavBar.vue";
 
   export default {
     name: 'bookmarked',
@@ -133,7 +135,7 @@
     },
 
     components: {
-      
+      NavBar
     },
   }
 </script>
