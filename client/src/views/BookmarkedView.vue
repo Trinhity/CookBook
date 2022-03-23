@@ -98,8 +98,8 @@
 
             <v-list>
               <v-list-item
-                v-for="ingredient in recipe.recipe.ingredientLines"
-                :key="ingredient"
+                v-for="(ingredient, i) in recipe.recipe.ingredientLines"
+                :key="i"
               >
                 <v-list-item-title>{{ ingredient }}</v-list-item-title>
               </v-list-item>

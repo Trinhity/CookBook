@@ -1,5 +1,7 @@
 <template>
+  
   <v-container>
+    
     <h1>Search page</h1>
     <v-form
       @submit="searchRecipe"
@@ -139,8 +141,8 @@
 
             <v-list>
               <v-list-item
-                v-for="ingredient in recipe.recipe.ingredientLines"
-                :key="ingredient"
+                v-for="(ingredient, i) in recipe.recipe.ingredientLines"
+                :key="i"
               >
                 <v-list-item-title>{{ ingredient }}</v-list-item-title>
               </v-list-item>
@@ -149,11 +151,12 @@
         </v-card>    
       </v-col>
     </v-row> 
+    <NavBar />
   </v-container>
 </template>
 
 <script>
- 
+  import NavBar from "../components/NavBar";
   export default {
     name: 'Search',
     data: () => ({
@@ -164,6 +167,10 @@
         v => !!v || 'Ingredient is required',
       ]
     }),
+
+    components: {
+      NavBar
+    },
 
     created() {
       // Check if the page has any rerouted data
