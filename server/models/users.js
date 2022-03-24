@@ -19,6 +19,12 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, "Please Include your password"],
   },
+  image: {
+    type: String,
+  },
+  banner: {
+    type: String,
+  },
   tokens: [
     {
       token: {

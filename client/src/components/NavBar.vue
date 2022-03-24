@@ -1,79 +1,81 @@
 <template>
-    <v-app id="inspire">
-        <v-navigation-drawer
-            v-model="drawer"
-            app
-        >
-            <v-list color="#9C6644">
-            <v-list-item class=" white--text" >
-                <v-list-item-avatar>
-                <v-icon x-large>
-                    mdi-account
-                </v-icon>
-                </v-list-item-avatar>
+  <v-app id="inspire">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
+      <v-list color="#9C6644">
+      <v-list-item class=" white--text" >
+          <v-list-item-avatar>
+            <v-img src="https://media.istockphoto.com/photos/portrait-of-a-funny-chicken-closeup-isolated-on-white-background-picture-id1132026121?s=612x612"></v-img>
+          </v-list-item-avatar>
 
-                <v-list-item-content>      
-                <v-list-item-title>{{ user.fname + " " + user.lname }}</v-list-item-title>
-                <v-list-item-subtitle @click="logout">Logout</v-list-item-subtitle>
-                </v-list-item-content>
-            
-                <v-list-item-content>
-                <v-menu     
-                    left
-                    offset-y
+          <v-list-item-content>      
+            <v-list-item-title>{{ user.fname + " " + user.lname }}</v-list-item-title>
+          </v-list-item-content>
+          
+          <v-list-item-content>
+            <v-menu     
+              left
+              offset-y
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  dark
+                  icon
+                  v-bind="attrs"
+                  v-on="on"
                 >
-                    <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        dark
-                        icon
-                        v-bind="attrs"
-                        v-on="on"
-                    >
-                        <v-icon>mdi-cog</v-icon>
-                    </v-btn>
-                    </template>
+                    <v-icon>mdi-cog</v-icon>
+                </v-btn>
+              </template>
 
-                    <v-list>
-                    <v-list-item>
-                        <v-list-item-title>Management</v-list-item-title>
-                    </v-list-item>
-                    
-                    </v-list>
-                </v-menu>          
-                </v-list-item-content>
-            </v-list-item>  
-            </v-list>
-
-            <v-divider></v-divider>
-
-            <v-list dense>
-            <v-list-item-group color="#B08968">
+              <v-list>
                 <v-list-item
-                v-for="(item, i) in items"
-                :key="i"
-                :to="item.link"
-                link
+                  :to="toProfile"
+                  link
                 >
-                <v-list-item-icon>
-                    <v-icon v-text="item.icon"></v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                </v-list-item-content>
+                  <v-list-item-title>
+                    Management
+                  </v-list-item-title>
                 </v-list-item>
-            </v-list-item-group>
-            </v-list>
-        </v-navigation-drawer>
+                
+              </v-list>
+            </v-menu>          
+          </v-list-item-content>
+        </v-list-item>  
+      </v-list>
 
-        <v-app-bar app>
-            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title>Secret Kitchen Diary</v-toolbar-title>
-        </v-app-bar>
-    </v-app>
+      <v-divider></v-divider>
+
+      <v-list dense>
+        <v-list-item-group color="#B08968">
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :to="item.link"
+            link
+          >
+            <v-list-item-icon>
+                <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar app>
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title>Secret Kitchen Diary</v-toolbar-title>
+    </v-app-bar>
+  </v-app>
 </template>
 
 <script>
-    import VueJwtDecode from "vue-jwt-decode";
+  import VueJwtDecode from "vue-jwt-decode";
 
   export default {
     name: 'Dashboard',
@@ -87,7 +89,7 @@
         { text: 'Personal Cookbook', icon: 'mdi-book', link: "/bookmarked"},
         { text: 'About', icon: 'mdi-help-box', link: "/about" },
       ],
-      
+      toProfile: "/userprofile"
 
     }),
 

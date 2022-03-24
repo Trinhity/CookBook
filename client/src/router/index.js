@@ -4,6 +4,7 @@ import DashboardView from "../views/DashboardView.vue";
 import BookmarkedView from "../views/BookmarkedView.vue";
 import SearchRecipeView from "../views/SearchRecipeView.vue";
 import LoginView from "../views/LoginView.vue";
+import UserProfileView from "../views/UserProfileView.vue";
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,12 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
+  },
+  {
+    path: "/userprofile",
+    name: "profile",
+    props: true,
+    component: UserProfileView,
   },
   {
     path: "/searchrecipes",

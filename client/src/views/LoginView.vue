@@ -124,7 +124,7 @@
                       block 
                       v-model="registration.verify" 
                       :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
-                      :rules="passwordMatchRules" 
+                      :rules="[passwordRules, passwordMatch]" 
                       :type="show ? 'text' : 'password'"
                       name="input-10-1" 
                       label="Confirm Password" 
@@ -193,15 +193,20 @@
         ],
 
         show: false,
-
         passwordRules: [
           value => (value && value.length >= 8) || "Min 8 characters"
         ],
 
         passwordMatchRules: [
-          value => (value && value == this.registration.password) || "Passwords do not match"
+          value => (value && value === this.registration.password) || "Passwords must match"
         ]
       }),
+
+      computed: {
+        passwordMatch() {
+          return () => this.registration.password === this.registration.verify || "Password must match";
+        }
+      },
 
       methods: {
         /**
