@@ -1,7 +1,7 @@
  <template>
     <v-container>
         <v-card width="700" tile>
-            <v-img height="100%" src="https://media.istockphoto.com/photos/chickens-on-traditional-free-range-poultry-farm-picture-id803406120?s=612x612"></v-img>
+            <v-img height="70%" src="https://media.istockphoto.com/photos/chickens-on-traditional-free-range-poultry-farm-picture-id803406120?s=612x612"></v-img>
             
             <v-col>   
                 <v-avatar size="100" style="position:absolute; top: 55%">
@@ -23,10 +23,18 @@
                             <v-list-item-subtitle>Certified chicken</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
+                    <v-list-ite>
+                        <router-link to='/edituser'>
+                            <v-btn
+                                outlined
+                                color="#9C6644"
+                            >Edit</v-btn>
+                        </router-link>
+                    </v-list-ite>
                 </v-list>
             </v-col>
-            <v-col>
-            </v-col>
+                
+    
 
         </v-card>
         <NavBar />

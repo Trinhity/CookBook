@@ -5,6 +5,7 @@ import BookmarkedView from "../views/BookmarkedView.vue";
 import SearchRecipeView from "../views/SearchRecipeView.vue";
 import LoginView from "../views/LoginView.vue";
 import UserProfileView from "../views/UserProfileView.vue";
+import EditUserView from "../views/EditUserView.vue";
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,12 @@ const routes = [
     name: "profile",
     props: true,
     component: UserProfileView,
+  },
+  {
+    path: "/edituserprofile",
+    name: "edituser",
+    props: true,
+    component: EditUserView,
   },
   {
     path: "/searchrecipes",

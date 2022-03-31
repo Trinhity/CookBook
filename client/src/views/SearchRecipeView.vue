@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <h1>Search page</h1>
     <v-form
       @submit.prevent="searchRecipe"
