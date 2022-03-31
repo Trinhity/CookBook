@@ -53,6 +53,8 @@ userSchema.methods.generateAuthToken = async function () {
       fname: user.firstname,
       lname: user.lastname,
       email: user.email,
+      image: user.image,
+      banner: user.banner,
     },
     "secret"
   );

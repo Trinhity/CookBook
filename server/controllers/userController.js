@@ -32,7 +32,7 @@ module.exports = class UserAPI {
       if (!user) {
         return res
           .status(401)
-          .json({ error: "Login failed! Check authentication credentials" });
+          .json({ err: "Login failed! Check authentication credentials" });
       }
       const token = await user.generateAuthToken();
       res.status(201).json({ user, token });

@@ -197,11 +197,7 @@
       /**
        * Query the Edamam API using the keyword from the form and return recipes
        */ 
-      searchRecipe(e) {
-        if (e != null) {
-          e.preventDefault();
-        }
-        
+      searchRecipe() {
         var string =
           "https://api.edamam.com/api/recipes/v2?type=public&q=" +
           encodeURI(this.mainIngredient) +
