@@ -5,7 +5,7 @@
       app
     >
       <v-list color="#9C6644">
-      <v-list-item class=" white--text" >
+      <v-list-item class=" white--text">
           <v-list-item-avatar>
             <v-img src="https://media.istockphoto.com/photos/portrait-of-a-funny-chicken-closeup-isolated-on-white-background-picture-id1132026121?s=612x612"></v-img>
           </v-list-item-avatar>
@@ -37,6 +37,13 @@
                 >
                   <v-list-item-title>
                     Management
+                  </v-list-item-title>
+                </v-list-item>
+                <v-list-item
+                  @click="logout"
+                  >
+                  <v-list-item-title>
+                    Logout
                   </v-list-item-title>
                 </v-list-item>
                 

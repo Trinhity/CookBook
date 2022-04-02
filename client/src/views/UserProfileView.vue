@@ -35,7 +35,7 @@
                                 outlined
                                 color="#9C6644"
                             >
-                                Edit User Profile
+                                <span>Edit User Profile</span>
                             </v-btn>
                         </router-link>
                     </v-container>
