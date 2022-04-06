@@ -124,7 +124,7 @@
                       block 
                       v-model="registration.verify" 
                       :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
-                      :rules="[passwordRules, passwordMatch]" 
+                      :rules="[passwordMatch]" 
                       :type="show ? 'text' : 'password'"
                       name="input-10-1" 
                       label="Confirm Password" 
@@ -198,13 +198,13 @@
         ],
 
         passwordMatchRules: [
-          value => (value && value === this.registration.password) || "Passwords must match"
+          value => (value && value == this.registration.password) || "Passwords must match"
         ]
       }),
 
       computed: {
         passwordMatch() {
-          return () => this.registration.password === this.registration.verify || "Password must match";
+          return () => this.registration.password == this.registration.verify || "Password must match";
         }
       },
 
@@ -238,6 +238,7 @@
             if (token) {
               localStorage.setItem("jwt", token);
               console.log("Successful registration");
+              // Send user to email confirmation page WIP
               this.$router.push("/");
               
             } else {

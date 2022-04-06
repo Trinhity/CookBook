@@ -161,7 +161,7 @@
                 console.log(this.user);
             },
 
-            editUser() {
+            async editUser() {
                  const res = await this.$http.post("/user/register", this.registration)
                 .then(res => {
                     console.log(res);

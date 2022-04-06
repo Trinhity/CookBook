@@ -4,12 +4,13 @@ const fs = require("fs");
 module.exports = class UserAPI {
   static async registerNewUser(req, res) {
     try {
-      // console.log(isUser);
-      // if (isUser.length >= 1) {
-      //   return res.status(409).json({
-      //     message: "email already in use",
-      //   });
-      // }
+      const email = req.body.email;
+      const isUser = await CookBookUsers.find({ email: email });
+      if (isUser) {
+        return res.status(409).json({
+          message: "email already in use",
+        });
+      }
       const user = new CookBookUsers({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
