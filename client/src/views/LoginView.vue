@@ -195,10 +195,6 @@
         show: false,
         passwordRules: [
           value => (value && value.length >= 8) || "Min 8 characters"
-        ],
-
-        passwordMatchRules: [
-          value => (value && value == this.registration.password) || "Passwords must match"
         ]
       }),
 

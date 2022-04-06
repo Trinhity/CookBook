@@ -11,64 +11,73 @@
                         lazy-validation
                         @submit.prevent="editUser"
                     >
-                        <v-row>
+                        <v-row>                        
                             <v-col cols="12" sm="4" md="4">
-                                <v-text-field 
-                                    v-model="firstname" 
-                                    label="First Name" 
-                                    maxlength="20" 
-                                >
-                                    <span>{{ firstname }}</span>
-                                </v-text-field>
+                                <v-container>
+                                    <v-hover>
+                                        <template v-slot:default="{ hover }">
+                                            <v-avatar size="300">
+                                                <v-img 
+                                                    src="https://media.istockphoto.com/photos/portrait-of-a-funny-chicken-closeup-isolated-on-white-background-picture-id1132026121?s=612x612"
+                                                    @click="changeProfilePic"
+                                                    :elevation="hover ? 24 : 2"
+                                                    :class="{ 'on-hover': hover }"
+                                                ></v-img>                                           
+                                            </v-avatar>
+                                        </template>
+                                    </v-hover>   
+                                </v-container>
                             </v-col>
-                            <v-col cols="12" sm="4" md="4">
-                                <v-text-field 
-                                    v-model="lastname" 
-                                    label="Last Name"
-                                    maxlength="20" 
-                                >
-                                    <span>{{ lastname }}</span>
-                                </v-text-field>
+                            <v-col>
+                                <v-container>                                                                  
+                                    <v-img style="max-width:100%; max-height:40%;" src="https://media.istockphoto.com/photos/chickens-on-traditional-free-range-poultry-farm-picture-id803406120?s=612x612"></v-img>
+                                    <v-row>
+                                        <v-col>
+                                            <v-text-field 
+                                                v-model="edit.firstname" 
+                                                label="First Name" 
+                                                maxlength="20" 
+                                            >
+                                                <span>{{ edit.firstname }}</span>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col>
+                                            <v-text-field 
+                                                v-model="edit.lastname" 
+                                                label="Last Name"
+                                                maxlength="20" 
+                                            >
+                                                <span>{{ edit.lastname }}</span>
+                                            </v-text-field>
+                                        </v-col>                                      
+                                    </v-row>
+                                </v-container>
                             </v-col>
-                            <v-spacer></v-spacer>
-                            <v-col cols="12" sm="4" md="4">
-                                <v-avatar size="100">
-                                    <v-img 
-                                        src="https://media.istockphoto.com/photos/portrait-of-a-funny-chicken-closeup-isolated-on-white-background-picture-id1132026121?s=612x612"
-                                    ></v-img> 
-                                </v-avatar>
-                            </v-col>
+                            
                             <v-col cols="12">
                                 <v-text-field 
-                                    v-model="email" 
+                                    v-model="edit.email" 
                                     label="E-mail" 
                                     disabled
                                 >
-                                    <span>{{ email }}</span>
+                                    <span>{{ edit.email }}</span>
                                 </v-text-field>
                             </v-col>
-                        
-                            <v-col class="d-flex" cols="12" sm="6" xsm="12">
-                            </v-col>
-                            <v-spacer></v-spacer>
                             <v-col cols="12">
                                 <v-text-field 
-                                    v-model="oldPassword" 
-                                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
-                                    :rules="passwordRules" 
-                                    :type="show ? 'text' : 'password'" 
+                                    v-model="edit.oldPassword" 
+                                    :type="'password'" 
                                     name="input-10-1" 
                                     label="Current Password" 
-                                    @click:append="show = !show"
                                     required
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="12">
+                            <v-col cols="12" sm="6" md="6">
                                 <v-text-field 
                                     block 
-                                    v-model="newPassword" 
+                                    v-model="edit.newPassword" 
                                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
-                                    :rules="passwordMatchRules" 
+                                    :rules="passwordRules" 
                                     :type="show ? 'text' : 'password'"
                                     name="input-10-1" 
                                     label="New Password" 
@@ -77,12 +86,12 @@
                                     required
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="12">
+                            <v-col cols="12" sm="6" md="6">
                                 <v-text-field 
                                     block 
-                                    v-model="verify" 
+                                    v-model="edit.verify" 
                                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" 
-                                    :rules="passwordMatchRules" 
+                                    :rules="[passwordMatch]" 
                                     :type="show ? 'text' : 'password'"
                                     name="input-10-1" 
                                     label="Confirm New Password" 
@@ -127,20 +136,29 @@
                 {name:"Password", icon:"mdi-account-outline"}
             ],
             user: null,
-            firstname: "",
-            lastname: "",
-            email: "",
-            oldPassword: "",
-            newPassword:"",
-            verify: "",
+            edit: {
+                firstname: "",
+                lastname: "",
+                email: "",
+                oldPassword: "",
+                newPassword:"",
+                verify: "",
+            },
+            
 
             valid: true,
             show: false,
 
-            passwordMatchRules: [
-                value => (value && value === this.newPassword) || "Passwords must match"
-            ]
+            passwordRules: [
+                value => (value && value.length >= 8) || "Min 8 characters"
+            ],
         }),
+
+        computed: {
+            passwordMatch() {
+                return () => this.edit.newPassword == this.edit.verify || "Password must match";
+            }
+        },
 
         components: {
             NavBar
@@ -155,10 +173,14 @@
                 let token = localStorage.getItem("jwt");
                 let decoded = VueJwtDecode.decode(token);
                 this.user = decoded;
-                this.firstname = this.user.fname;
-                this.lastname = this.user.lname;
-                this.email = this.user.email;
+                this.edit.firstname = this.user.fname;
+                this.edit.lastname = this.user.lname;
+                this.edit.email = this.user.email;
                 console.log(this.user);
+            },
+
+            changeProfilePic() {
+
             },
 
             async editUser() {
