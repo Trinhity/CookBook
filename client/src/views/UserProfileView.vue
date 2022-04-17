@@ -6,7 +6,6 @@
                 <v-avatar size="100" style="position:absolute; top: 58%">
                     <v-img 
                         src="https://media.istockphoto.com/photos/portrait-of-a-funny-chicken-closeup-isolated-on-white-background-picture-id1132026121?s=612x612"
-
                     ></v-img> 
                 </v-avatar>   
             </v-col>

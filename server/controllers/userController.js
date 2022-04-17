@@ -16,6 +16,8 @@ module.exports = class UserAPI {
         lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.password,
+        image: null,
+        banner: null,
       });
       let data = await user.save();
       const token = await user.generateAuthToken();

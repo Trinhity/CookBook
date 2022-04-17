@@ -12,8 +12,13 @@
                         @submit.prevent="editUser"
                     >
                         <v-row>                        
-                            <v-col cols="12" sm="4" md="4">
+                            <v-col>
                                 <v-container>
+                                    <v-img style="max-width:100%; max-height:20%;" src="https://media.istockphoto.com/photos/chickens-on-traditional-free-range-poultry-farm-picture-id803406120?s=612x612"></v-img>
+                                </v-container>
+                            </v-col>
+                            <v-col cols="12" sm="4" md="4">
+                                <v-container>                                                                                          
                                     <v-hover>
                                         <template v-slot:default="{ hover }">
                                             <v-avatar size="300">
@@ -25,12 +30,7 @@
                                                 ></v-img>                                           
                                             </v-avatar>
                                         </template>
-                                    </v-hover>   
-                                </v-container>
-                            </v-col>
-                            <v-col>
-                                <v-container>                                                                  
-                                    <v-img style="max-width:100%; max-height:40%;" src="https://media.istockphoto.com/photos/chickens-on-traditional-free-range-poultry-farm-picture-id803406120?s=612x612"></v-img>
+                                    </v-hover>
                                     <v-row>
                                         <v-col>
                                             <v-text-field 
